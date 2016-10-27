@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="wtcs-data-systems-validators:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="data-systems-validators.war">
+      <element id="artifact" artifact-name="wtcs-data-systems-validators:war exploded" />
+    </root>
+  </artifact>
+</component>
