@@ -36,8 +36,6 @@ public class S9Record {
 
     public S9Record(String s9Record) {
 
-        log.info("LOGGING TEST!");
-
         // String indexes are zero-based; all position values from the comment above are reduced by 1
         if (s9Record.length() >= 31) {
             this.recordTypeIdentifier = s9Record.substring(0, 2);
@@ -50,7 +48,6 @@ public class S9Record {
         } else {
             throw new IndexOutOfBoundsException();
         }
-
     }
 
     /**
@@ -60,7 +57,6 @@ public class S9Record {
      */
     public boolean isValid() {
         boolean isValid = true;
-        //TODO: implement validation for all fields
         //TODO: do validation without a bunch of if statements
 
         if (!(new AlphaNumericTypeValidator().isValid(recordTypeIdentifier))) {
@@ -155,4 +151,5 @@ public class S9Record {
                 ", technicalSkillsAttainment='" + technicalSkillsAttainment + '\'' +
                 '}';
     }
+
 }
