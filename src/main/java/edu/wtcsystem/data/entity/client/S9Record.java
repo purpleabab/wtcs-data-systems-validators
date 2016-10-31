@@ -40,16 +40,14 @@ public class S9Record {
 
         // String indexes are zero-based; all position values from the comment above are reduced by 1
         if (s9Record.length() >= 31) {
-            this.recordTypeIdentifier = s9Record.substring(0, 1);
-            this.districtId = s9Record.substring(2, 3);
-            this.fiscalYear = s9Record.substring(4, 7);
-            this.districtStudentId = s9Record.substring(8, 16);
-            this.programNumber = s9Record.substring(17, 22);
-            this.programGraduate = s9Record.substring(29, 29);  //TODO: maybe don't use substring
-            this.technicalSkillsAttainment = s9Record.substring(30, 30);  //TODO: maybe don't use substring
-        }
-
-        else{
+            this.recordTypeIdentifier = s9Record.substring(0, 2);
+            this.districtId = s9Record.substring(2, 4);
+            this.fiscalYear = s9Record.substring(4, 8);
+            this.districtStudentId = s9Record.substring(8, 17);
+            this.programNumber = s9Record.substring(17, 23);
+            this.programGraduate = s9Record.substring(29, 30);
+            this.technicalSkillsAttainment = s9Record.substring(30, 31);  
+        } else {
             throw new IndexOutOfBoundsException();
         }
 
