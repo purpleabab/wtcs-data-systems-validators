@@ -57,6 +57,3 @@ buildNumber.properties
 .mvn/timing.properties
 
 .idea/libraries/
-README.md
-src/main/resources/
-src/test/
