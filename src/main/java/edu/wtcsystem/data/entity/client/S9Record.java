@@ -27,27 +27,52 @@ public class S9Record {
     private String programGraduate;
     private String technicalSkillsAttainment;
 
-    //TODO implement error handling.  Ideally return  more than just boolean from isValid.  Ideally return record line and character with expected and actual result
-
-    public S9Record() {
-        //default empty constructor
-    }
+    //TODO: Implement error handling. Ideally return  more than just boolean from isValid. Ideally return record line and character with expected and actual result.
 
     public S9Record(String s9Record) {
-        //TODO: parse out an S9 record into strings that are in S9
+
+        // String indexes are zero-based; all position values from the comment above are reduced by 1
+        if (s9Record.length() >= 31) {
+            this.recordTypeIdentifier = s9Record.substring(0, 1);
+            this.districtId = s9Record.substring(2, 3);
+            this.fiscalYear = s9Record.substring(4, 7);
+            this.districtStudentId = s9Record.substring(8, 16);
+            this.programNumber = s9Record.substring(17, 22);
+            this.programGraduate = s9Record.substring(29, 29);  //TODO: maybe don't use substring
+            this.technicalSkillsAttainment = s9Record.substring(30, 30);  //TODO: maybe don't use substring
+        }
     }
 
     /**
-     * Runs validator methods for each field and returns true if all pass
+     * Runs validator methods for each field in the record. Any failure changes isValid to false.
      *
      * @return boolean
      */
     public boolean isValid() {
-        boolean isValid = false;
-        //TODO implement validation for all fields
+        boolean isValid = true;
+        //TODO: implement validation for all fields
+        //TODO: do validation without a bunch of if statements
 
-        if (new NumericTypeValidator().isValid(districtId)) {
-            isValid = true;
+        if (!(new NumericTypeValidator().isValid(districtId))) {
+            isValid = false;
+        }
+        if (!(new NumericTypeValidator().isValid(districtId))) {
+            isValid = false;
+        }
+        if (!(new NumericTypeValidator().isValid(fiscalYear))) {
+            isValid = false;
+        }
+        if (!(new NumericTypeValidator().isValid(districtStudentId))) {
+            isValid = false;
+        }
+        if (!(new NumericTypeValidator().isValid(programNumber))) {
+            isValid = false;
+        }
+        if (!(new NumericTypeValidator().isValid(programGraduate))) {
+            isValid = false;
+        }
+        if (!(new NumericTypeValidator().isValid(technicalSkillsAttainment))) {
+            isValid = false;
         }
         return isValid;
     }
