@@ -13,6 +13,7 @@ package edu.wtcsystem.data.validator.type;
  * NumericTypeValidator verifies that a type is only numbers.
  *
  * @author cwinebrenner
+ * @since 2016-10-31
  */
 public final class NumericTypeValidator extends TypeValidatorBase {
 

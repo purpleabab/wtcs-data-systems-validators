@@ -2,6 +2,7 @@ package edu.wtcsystem.data.entity.client;
 
 /**
  * @author cwinebrenner
+ * @since 2016-10-31
  */
 public class S3Record {
     /*

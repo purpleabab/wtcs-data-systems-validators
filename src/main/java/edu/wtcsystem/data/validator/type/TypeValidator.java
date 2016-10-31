@@ -6,6 +6,7 @@ package edu.wtcsystem.data.validator.type;
  * valid representation of the type being checked.
  *
  * @author cwinebrenner
+ * @since 2016-10-31
  */
 interface TypeValidator {
 

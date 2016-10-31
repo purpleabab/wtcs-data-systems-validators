@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
  * constructor with an appropriate regular expression.
  *
  * @author cwinebrenner
+ * @since 2016-10-31
  */
 abstract class TypeValidatorBase implements TypeValidator {
 
