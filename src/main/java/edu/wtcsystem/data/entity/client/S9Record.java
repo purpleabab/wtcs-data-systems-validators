@@ -42,6 +42,8 @@ public class S9Record {
             this.programGraduate = s9Record.substring(29, 29);  //TODO: maybe don't use substring
             this.technicalSkillsAttainment = s9Record.substring(30, 30);  //TODO: maybe don't use substring
         }
+        //TODO: Handle other things for length besides <= 31
+        //TODO: Fix substring is not getting what we want
     }
 
     /**

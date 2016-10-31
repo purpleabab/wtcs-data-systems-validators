@@ -47,6 +47,7 @@ abstract class TypeValidatorBase implements TypeValidator {
      * <code>false</code> otherwise.
      */
     public boolean isValid(String typedStringToValidate) {
+        //TODO: Accept whitespace only OR a valid instance of the type?
         return TYPE_MATCHER.reset(typedStringToValidate).matches();
     }
 
