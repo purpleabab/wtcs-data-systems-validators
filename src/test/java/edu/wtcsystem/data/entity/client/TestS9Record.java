@@ -11,13 +11,22 @@ import static org.junit.Assert.*;
  */
 public class TestS9Record {
 
+    final static String VALIDS9RECORD = "S9102017123456789504999      12";
+    final static String NOT_VALIDS9RECORD = "S9AA20171234B67CD504999      W2";
+
+
     @Test
     public void testS9RecordCreate() {
-        //TODO: Make this create a S9 record
+        S9Record testS9Record = new S9Record(VALIDS9RECORD);
+        assertNotNull(testS9Record);
+
+
     }
 
     @Test
     public void testS9RecordIsValid() {
+        S9Record testS9Record = new S9Record(VALIDS9RECORD);
+        assertTrue("S9 is not valid and should be: ", testS9Record.isValid());
 
     }
 }
