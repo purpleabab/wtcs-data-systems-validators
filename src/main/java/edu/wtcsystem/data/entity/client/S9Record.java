@@ -3,12 +3,16 @@ package edu.wtcsystem.data.entity.client;
 import edu.wtcsystem.data.validator.type.AlphaNumericTypeValidator;
 import edu.wtcsystem.data.validator.type.NumericTypeValidator;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author cwinebrenner
  * @author karen.rahmeier
  * @since 2016-10-31
  */
 public class S9Record {
+
+    private final Logger log = Logger.getLogger(this.getClass());
 
     /*
     1-2 Record Type Identifier (e.g. S1, S3, S9)
@@ -31,6 +35,8 @@ public class S9Record {
     //TODO: Implement error handling. Ideally return  more than just boolean from isValid. Ideally return record line and character with expected and actual result.
 
     public S9Record(String s9Record) {
+
+        log.info("LOGGING TEST!");
 
         // String indexes are zero-based; all position values from the comment above are reduced by 1
         if (s9Record.length() >= 31) {
