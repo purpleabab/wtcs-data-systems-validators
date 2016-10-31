@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
  * @author nataliya.knudson
  * @since 2016-10-31
  */
-
 public class TestAlphaNumericTypeValidator {
 
     final static String ALPHANUMERIC = "BA1245awe";
