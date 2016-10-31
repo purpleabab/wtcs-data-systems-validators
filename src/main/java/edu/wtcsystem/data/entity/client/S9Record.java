@@ -51,9 +51,6 @@ public class S9Record {
             throw new IndexOutOfBoundsException();
         }
 
-        //TODO: Handle other things for length besides <= 31
-        //TODO: Fix substring is not getting what we want
-
     }
 
     /**
