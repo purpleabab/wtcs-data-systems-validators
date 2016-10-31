@@ -1,7 +1,10 @@
 package edu.wtcsystem.data.entity.client;
 
+import edu.wtcsystem.data.validator.type.NumericTypeValidator;
+
 /**
  * @author cwinebrenner
+ * @author karen.rahmeier
  * @since 2016-10-31
  */
 public class S9Record {
@@ -24,12 +27,29 @@ public class S9Record {
     private String programGraduate;
     private String technicalSkillsAttainment;
 
+    //TODO implement error handling.  Ideally return  more than just boolean from isValid.  Ideally return record line and character with expected and actual result
+
     public S9Record() {
         //default empty constructor
     }
 
     public S9Record(String s9Record) {
         //TODO: parse out an S9 record into strings that are in S9
+    }
+
+    /**
+     * Runs validator methods for each field and returns true if all pass
+     *
+     * @return boolean
+     */
+    public boolean isValid() {
+        boolean isValid = false;
+        //TODO implement validation for all fields
+
+        if (new NumericTypeValidator().isValid(districtId)) {
+            isValid = true;
+        }
+        return isValid;
     }
 
     public String getRecordTypeIdentifier() {
