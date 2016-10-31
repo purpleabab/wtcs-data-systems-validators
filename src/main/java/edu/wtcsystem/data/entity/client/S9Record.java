@@ -1,5 +1,6 @@
 package edu.wtcsystem.data.entity.client;
 
+import edu.wtcsystem.data.validator.type.AlphaNumericTypeValidator;
 import edu.wtcsystem.data.validator.type.NumericTypeValidator;
 
 /**
@@ -53,7 +54,7 @@ public class S9Record {
         //TODO: implement validation for all fields
         //TODO: do validation without a bunch of if statements
 
-        if (!(new NumericTypeValidator().isValid(districtId))) {
+        if (!(new AlphaNumericTypeValidator().isValid(recordTypeIdentifier))) {
             isValid = false;
         }
         if (!(new NumericTypeValidator().isValid(districtId))) {
