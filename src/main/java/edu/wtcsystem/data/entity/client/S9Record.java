@@ -10,6 +10,7 @@ import edu.wtcsystem.data.validator.type.NumericTypeValidator;
  */
 public class S9Record {
 
+
     /*
     1-2 Record Type Identifier (e.g. S1, S3, S9)
     3-4 District
@@ -41,6 +42,9 @@ public class S9Record {
             this.programNumber = s9Record.substring(17, 22);
             this.programGraduate = s9Record.substring(29, 29);  //TODO: maybe don't use substring
             this.technicalSkillsAttainment = s9Record.substring(30, 30);  //TODO: maybe don't use substring
+        }
+        else{
+            throw new IndexOutOfBoundsException();
         }
     }
 
@@ -134,4 +138,16 @@ public class S9Record {
         this.technicalSkillsAttainment = technicalSkillsAttainment;
     }
 
+    @Override
+    public String toString() {
+        return "S9Record{" +
+                "recordTypeIdentifier='" + recordTypeIdentifier + '\'' +
+                ", districtId='" + districtId + '\'' +
+                ", fiscalYear='" + fiscalYear + '\'' +
+                ", districtStudentId='" + districtStudentId + '\'' +
+                ", programNumber='" + programNumber + '\'' +
+                ", programGraduate='" + programGraduate + '\'' +
+                ", technicalSkillsAttainment='" + technicalSkillsAttainment + '\'' +
+                '}';
+    }
 }
