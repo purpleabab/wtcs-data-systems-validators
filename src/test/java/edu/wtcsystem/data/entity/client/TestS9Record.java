@@ -42,4 +42,12 @@ public class TestS9Record {
         S9Record testS9Record = new S9Record(NOT_VALIDS9RECORD_TOO_SHORT );
         assertFalse("S9 did not throw expected IOE exception: ", testS9Record.isValid());
     }
+
+    @Test
+    public void testS9RecordIsNotValid(){
+        S9Record testS9RecordIsNotValid = new S9Record(NOT_VALIDS9RECORD);
+        System.out.println("toString of s9" + testS9RecordIsNotValid.toString());
+        assertFalse("S9 is not valid and should be: ", testS9RecordIsNotValid.isValid());
+    }
+
 }
