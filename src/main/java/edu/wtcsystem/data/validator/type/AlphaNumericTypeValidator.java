@@ -1,9 +1,10 @@
 package edu.wtcsystem.data.validator.type;
 
-//TODO: Add a description of what this type is
-//TODO: Add yourself as another @author field if you worked on this class
-
 /**
+ * Regular-expression-based String validator.
+ * <p>
+ * AlphaNumericTypeValidator verifies that a type is only letters and/or numbers.
+ *
  * @author cwinebrenner
  * @since 2016-10-31
  */
@@ -11,6 +12,10 @@ public final class AlphaNumericTypeValidator extends TypeValidatorBase implement
 
     private final static String ALPHA_NUMERIC_TYPE_REGEX = "^[0-9a-zA-Z]+$";
 
+    /**
+     * Initializes the superclass (TypeValidatorBase) with the appropriate
+     * regular expression to represent the type that this class validates.
+     */
     public AlphaNumericTypeValidator() {
         super(ALPHA_NUMERIC_TYPE_REGEX);
     }

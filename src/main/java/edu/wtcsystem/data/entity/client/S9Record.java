@@ -46,7 +46,7 @@ public class S9Record {
             this.districtStudentId = s9Record.substring(8, 17);
             this.programNumber = s9Record.substring(17, 23);
             this.programGraduate = s9Record.substring(29, 30);
-            this.technicalSkillsAttainment = s9Record.substring(30, 31);  
+            this.technicalSkillsAttainment = s9Record.substring(30, 31);
         } else {
             throw new IndexOutOfBoundsException();
         }

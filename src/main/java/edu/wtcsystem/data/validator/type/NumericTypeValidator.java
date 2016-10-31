@@ -1,14 +1,18 @@
 package edu.wtcsystem.data.validator.type;
 
-//TODO: Remove note regarding NumericTypeValidator being a sample before final submission
+//TODO: Remove notes regarding NumericTypeValidator being a sample before final submission in [[[[[ ]]]]]
 
 /**
+ * [[[[[
  * NumericTypeValidator is the first concrete implementation of a TypeValidator
  * intended to be used by the team as a blueprint for further validators.
  * <p>
  * Implements a String validator for a specific, concrete regular expression
  * Each class that extends TypeValidatorBase should have its own descriptive final static regex string
  * which it calls the superclass constructor with.
+ * ]]]]]
+ * <p>
+ * Regular-expression-based String validator.
  * <p>
  * NumericTypeValidator verifies that a type is only numbers.
  *

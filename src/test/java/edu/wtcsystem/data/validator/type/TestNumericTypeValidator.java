@@ -1,29 +1,31 @@
 package edu.wtcsystem.data.validator.type;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-
-//TODO: Implement log4j either to a file or database (prefer database)
-import org.apache.logging.log4j.*;
 
 /**
  * @author cwinebrenner
  */
 public class TestNumericTypeValidator {
 
-    final static String NUMBERS = "123456789";
-    final static String NOT_NUMBERS = "abcde";
+    private final Logger log = Logger.getLogger(this.getClass());
+
+    final static String NUMERIC = "123456789";
+    final static String NOT_NUMERIC = "abcde";
     final static NumericTypeValidator validator = new NumericTypeValidator();
 
     @Test
     public void testNumericTypePasses() {
-        assertTrue("NumericTypeValidator: String with only numbers INCORRECTLY marked invalid", validator.isValid(NUMBERS));
+        log.info("Testing for AlphaNumericTypeValidator pass...");
+        assertTrue("NumericTypeValidator: String with only numbers INCORRECTLY marked invalid!", validator.isValid(NUMERIC));
     }
 
     @Test
-    public void testNotNumericFails() {
-        assertFalse("NumericTypeValidator: String with no numbers INCORRECTLY marked valid", validator.isValid(NOT_NUMBERS));
+    public void testNotNumericTypeFails() {
+        log.info("Testing for AlphaNumericTypeValidator fail...");
+        assertFalse("NumericTypeValidator: String with no numbers INCORRECTLY marked valid!", validator.isValid(NOT_NUMERIC));
     }
 
 }
