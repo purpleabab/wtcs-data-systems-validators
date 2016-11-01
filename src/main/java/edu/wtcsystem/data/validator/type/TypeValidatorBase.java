@@ -58,7 +58,7 @@ abstract class TypeValidatorBase implements TypeValidator {
      * provided String is white space; <code>false</code> otherwise.
      */
     @Override
-    public boolean isValid(String typedStringToValidate) {
+    synchronized public boolean isValid(String typedStringToValidate) {
         return (TYPE_MATCHER.reset(typedStringToValidate).matches() || WHITESPACE_MATCHER.reset(typedStringToValidate).matches());
     }
 
