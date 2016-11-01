@@ -57,6 +57,7 @@ abstract class TypeValidatorBase implements TypeValidator {
      * regex and is therefore represents a valid instance of the type of data we want, or if the
      * provided String is white space; <code>false</code> otherwise.
      */
+    @Override
     public boolean isValid(String typedStringToValidate) {
         return (TYPE_MATCHER.reset(typedStringToValidate).matches() || WHITESPACE_MATCHER.reset(typedStringToValidate).matches());
     }

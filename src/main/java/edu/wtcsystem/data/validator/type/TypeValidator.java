@@ -8,7 +8,7 @@ package edu.wtcsystem.data.validator.type;
  * @author cwinebrenner
  * @since 2016-10-31
  */
-interface TypeValidator {
+public interface TypeValidator {
 
     /**
      * Checks to see if the provided String is a valid instance of the type being checked.
