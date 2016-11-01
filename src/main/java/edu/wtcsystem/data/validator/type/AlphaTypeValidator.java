@@ -17,4 +17,9 @@ public final class AlphaTypeValidator extends TypeValidatorBase implements TypeV
         super("");
     }
 
+    @Override
+    public String toString() {
+        return "ALPHA: A through Z, upper or lower case.";
+    }
+
 }

@@ -31,4 +31,9 @@ public final class NumericTypeValidator extends TypeValidatorBase implements Typ
         super(NUMERIC_TYPE_REGEX);
     }
 
+    @Override
+    public String toString() {
+        return "NUMERIC: Digits 0 through 9.";
+    }
+
 }
