@@ -19,4 +19,6 @@ public class RecordField {
         this.fieldType = fieldType;
     }
 
+    //TODO: Hold value of this RecordField's data; don't put it in
+
 }
