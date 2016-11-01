@@ -23,7 +23,7 @@ public final class AlphaNumericTypeValidator extends TypeValidatorBase implement
     //TODO: Go implement toString overrides on all the TypeValidators
     @Override
     public String toString() {
-        return "ALPHA_NUMERIC: A through Z, upper or lower case, and digits 0 through 9."
+        return "ALPHA_NUMERIC: A through Z, upper or lower case, and digits 0 through 9.";
     }
 
 }
