@@ -7,10 +7,22 @@ package edu.wtcsystem.data.validator.type;
 public enum ValidateType {
 
     NUMERIC {
+        @Override
+        public String toString() {
+            return "Numeric";
+        }
     },
     ALPHA {
+        @Override
+        public String toString() {
+            return "Alphabetic";
+        }
     },
     ALPHA_NUMERIC {
+        @Override
+        public String toString() {
+            return "Alphanumeric";
+        }
     }
 
 }

@@ -27,29 +27,29 @@ public class TestS9Record {
     @Test
     public void testS9RecordCreate() {
         log.info("  Testing for valid S9 Record creation pass...");
-        S9Record testS9Record = new S9Record(VALID_S9_RECORD);
-        assertNotNull(testS9Record);
+        OldS9Record testOldS9Record = new OldS9Record(VALID_S9_RECORD);
+        assertNotNull(testOldS9Record);
     }
 
     @Test
     public void testS9RecordIsValid() {
         log.info("  Testing for internal valid S9 Record self-validation pass...");
-        S9Record testS9Record = new S9Record(VALID_S9_RECORD);
-        assertTrue("S9 Record is not valid and should be!", testS9Record.isValid());
+        OldS9Record testOldS9Record = new OldS9Record(VALID_S9_RECORD);
+        assertTrue("S9 Record is not valid and should be!", testOldS9Record.isValid());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testS9RecordTooShort() {
         log.info("  Testing for short invalid S9 Record fail...");
-        S9Record testS9Record = new S9Record(NOT_VALID_S9_RECORD_TOO_SHORT);
-        assertFalse("S9 Record too short and did not throw expected IndexOutOfBounds exception!", testS9Record.isValid());
+        OldS9Record testOldS9Record = new OldS9Record(NOT_VALID_S9_RECORD_TOO_SHORT);
+        assertFalse("S9 Record too short and did not throw expected IndexOutOfBounds exception!", testOldS9Record.isValid());
     }
 
     @Test
     public void testS9RecordIsNotValid() {
         log.info("  Testing invalid S9 Record fields fail...");
-        S9Record testS9Record = new S9Record(NOT_VALID_S9_RECORD);
-        assertFalse("S9 Record invalid internal field(s) INCORRECTLY marked as valid!", testS9Record.isValid());
+        OldS9Record testOldS9Record = new OldS9Record(NOT_VALID_S9_RECORD);
+        assertFalse("S9 Record invalid internal field(s) INCORRECTLY marked as valid!", testOldS9Record.isValid());
     }
 
 }
