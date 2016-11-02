@@ -10,4 +10,7 @@ public class RecordValidatorEngine {
 
     }
 
+    // Eats things that have DefinedValidatableRecords in them, and validates them.
+    // It would be good if there was a pool of TypeValidators to avoid recreating them repeatedly
+
 }
