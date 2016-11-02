@@ -2,7 +2,7 @@ package edu.wtcsystem.data.entity.client;
 
 import edu.wtcsystem.data.record.Record;
 import edu.wtcsystem.data.record.RecordField;
-import edu.wtcsystem.data.record.ValidateType;
+import edu.wtcsystem.data.validator.type.ValidateType;
 
 /**
  * @author cwinebrenner

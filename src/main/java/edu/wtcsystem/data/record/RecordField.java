@@ -1,15 +1,16 @@
 package edu.wtcsystem.data.record;
 
+import edu.wtcsystem.data.validator.type.ValidateType;
+
 /**
  * @author cwinebrenner
  * @since 2016-10-31
  */
 public class RecordField {
 
-    //TODO: Make all protected for direct access (make all final, a la immutable?) or add getters/setters
-    private String fieldName;
-    private int startPosition;
-    private int endPosition;
+    protected final String fieldName;
+    protected final int startPosition;
+    protected final int endPosition;
     protected final ValidateType fieldType;
 
     public RecordField(String fieldName, int startPosition, int endPosition, ValidateType fieldType) {
@@ -18,7 +19,5 @@ public class RecordField {
         this.endPosition = endPosition;
         this.fieldType = fieldType;
     }
-
-    //TODO: Hold value of this RecordField's data; don't put it in
 
 }
