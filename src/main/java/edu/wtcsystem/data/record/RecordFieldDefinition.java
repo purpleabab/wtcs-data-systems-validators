@@ -16,4 +16,16 @@ abstract class RecordFieldDefinition {
         this.FIELD_END_POSITION = endPosition;
     }
 
+    public String getFieldName() {
+        return FIELD_NAME;
+    }
+
+    public int getFieldStartPosition() {
+        return FIELD_START_POSITION;
+    }
+
+    public int getFieldEndPosition() {
+        return FIELD_END_POSITION;
+    }
+
 }

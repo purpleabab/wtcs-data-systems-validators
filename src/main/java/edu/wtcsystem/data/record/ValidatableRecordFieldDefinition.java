@@ -15,12 +15,16 @@ public class ValidatableRecordFieldDefinition extends RecordFieldDefinition {
         this.FIELD_VALIDATE_TYPE = fieldType;
     }
 
+    public ValidateType getFieldValidateType() {
+        return FIELD_VALIDATE_TYPE;
+    }
+
     @Override
     public String toString() {
         return FIELD_NAME + " in position " +
-                (FIELD_START_POSITION +1) + "-" +
-                (FIELD_END_POSITION +1) + "is validated as " +
-                FIELD_VALIDATE_TYPE.toString();
+                ((FIELD_START_POSITION + 1) == (FIELD_END_POSITION) ?
+                        (FIELD_END_POSITION) : ((FIELD_START_POSITION + 1) + "-" + (FIELD_END_POSITION))) +
+                " is validated as " + FIELD_VALIDATE_TYPE.toString();
     }
 
 }
