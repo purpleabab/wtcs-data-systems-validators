@@ -10,11 +10,10 @@ package edu.wtcsystem.data.validator.type;
 public final class AlphaTypeValidator extends TypeValidatorBase implements TypeValidator {
 
     //TODO: Write a regular expression for this type and put in the constant String
-    private final static String ALPHA_TYPE_REGEX = "";
+    private final static String ALPHA_TYPE_REGEX = "^[A-Za-z]+$";
 
     public AlphaTypeValidator() {
-        //TODO: Change the superclass constructor call to provide the correct regular expression for this type
-        super("");
+        super(ALPHA_TYPE_REGEX);
     }
 
     @Override
