@@ -13,7 +13,7 @@ public abstract class ValidatableRecord extends Record {
     private final ValidatableRecordDefinition RECORD_DEFINITION;
     private Map<String, String> RECORD_VALUES;
 
-    //TODO:It's possible that the record values and parsing of them should move to Record
+    // TODO:It's possible that the record values and parsing of them should move to Record
     public ValidatableRecord(String recordLineText, ValidatableRecordDefinition recordDefinition) {
         // Save the String that makes up the record and note the definition
         super(recordLineText);

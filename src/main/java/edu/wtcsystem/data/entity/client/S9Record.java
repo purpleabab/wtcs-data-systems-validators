@@ -1,16 +1,12 @@
 package edu.wtcsystem.data.entity.client;
 
-import edu.wtcsystem.data.record.DefinedValidatableRecord;
-import edu.wtcsystem.data.record.ValidatableRecord;
-import edu.wtcsystem.data.record.ValidatableRecordDefinition;
-import edu.wtcsystem.data.record.ValidatableRecordFieldDefinition;
+import edu.wtcsystem.data.record.*;
 import edu.wtcsystem.data.validator.type.ValidateType;
 
 /**
  * @author cwinebrenner
  * @since 2016-11-02
  */
-//TODO: Add interface for validating this record and make the S9Record object implement it
 public class S9Record extends ValidatableRecord implements DefinedValidatableRecord {
 
     private static ValidatableRecordDefinition DEFINITION;
@@ -25,7 +21,7 @@ public class S9Record extends ValidatableRecord implements DefinedValidatableRec
         31 Technical Skills Attainment
         */
 
-        DEFINITION = new ValidatableRecordDefinition(31);
+        DEFINITION = new ValidatableRecordDefinition(S9Record.class.getSimpleName(), 31);
         DEFINITION.add(new ValidatableRecordFieldDefinition("recordTypeIdentifier", 0, 2, ValidateType.ALPHA_NUMERIC));
         DEFINITION.add(new ValidatableRecordFieldDefinition("districtId", 2, 4, ValidateType.NUMERIC));
         DEFINITION.add(new ValidatableRecordFieldDefinition("fiscalYear", 4, 8, ValidateType.NUMERIC));
