@@ -8,3 +8,4 @@
 | 10/31/16 | Team project, everyone together. Five hours each. | 15 ||
 | 11/01/16 | Record to generic Record, Christian | 5 | Research and fighting |
 | 11/02/16 | Refactor to generic Validatable Records with Definitions, Christian | 4 ||
+| 11/04/16 | Build base JAX-RS handler for multipart/form-data; integrate RESTeasy, Christian | 3 ||
