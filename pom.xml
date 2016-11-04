@@ -8,6 +8,9 @@
   <version>1.0-SNAPSHOT</version>
   <name>WTCS Data Systems Validators</name>
   <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
   <dependencies>
 
@@ -68,6 +71,14 @@
           <encoding>UTF-8</encoding>
           <source>1.8</source>
           <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.19.1</version>
+        <configuration>
+          <skipTests>true</skipTests>
         </configuration>
       </plugin>
     </plugins>

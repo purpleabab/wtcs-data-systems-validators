@@ -33,6 +33,7 @@ public class WtcsFile {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response validateFile(MultipartFormDataInput mfdi) {
 
+        log.info("INFO_LOG_STATEMENT: entering " + this.getClass().getSimpleName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
         Map<String, List<InputPart>> fdm = mfdi.getFormDataMap();
         List<InputPart> fdmInputParts = fdm.get(FORM_FILE_INPUT_NAME);
 
@@ -40,12 +41,12 @@ public class WtcsFile {
 
             MultivaluedMap<String, String> ipHeader = ip.getHeaders();
             for (String k : ipHeader.keySet()) {
-                log.info("InputPart headers: " + k + " --> " + ipHeader.get(k));
+                log.info("INFO_LOG_STATEMENT: InputPart headers: " + k + " --> " + ipHeader.get(k));
             }
 
         }
 
-        return Response.status(Status.OK).entity("").build();
+        return Response.status(Status.OK).entity("validate claims to have gotten the file").build();
     }
 
 

@@ -11,7 +11,7 @@ import javax.ws.rs.core.Application;
  * @since 2016-11-04
  */
 
-@ApplicationPath("/")
+@ApplicationPath("/wtcs")
 public class WtcsApplication extends Application {
 
     @Override
