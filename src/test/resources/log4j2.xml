@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Configuration name="WTCS-Data-Systems-Logger" strict="true" status="info">
-  <!-- Sets up a configuration named "WTCS-Data-Systems-Logger,"
-       using strict XML syntax for the configuration file,
-       with internal Log4j2 level is set to INFO. -->
+<Configuration name="WTCS-Data-Systems-Validators-Logger" strict="true" status="DEBUG" monitorInternal="5">
+  <!-- Sets up a configuration named "WTCS-Data-Systems-Validators-Logger,"
+       using strict XML syntax for the configuration file, with internal
+       Log4j2 level is set to value of status, rescans of file for changes
+       at monitorInterval seconds. -->
 
   <!-- Properties can be referenced elsewhere with StrLookup-interface style syntax. -->
   <Properties>
@@ -11,33 +12,37 @@
     <Property name="logs.tomcat">$${env:CATALINA_HOME}/logs</Property>
   </Properties>
 
-  <!-- Set up two appenders: CONSOLE (System.out/STDOUT) and the IntelliJ project log directory.
+  <!-- Set up appenders: CONSOLE (System.out/STDOUT), the IntelliJ project log directory,
+       and the default server "logs" folder in a Tomcat installation.
+       TODO: Add JBoss EAP logging support
        Note that since the Maven layout in IntelliJ puts the log directory in the same relative
        position versus both src and test, the same config file works for both unless differently
-       named log files are desired. -->
+       named log files are desired, and also regardless of platform or install location. -->
   <Appenders>
     <Appender type="Console" name="CONSOLE">
       <Layout type="PatternLayout">
         <Pattern>${pattern.default}</Pattern>
       </Layout>
     </Appender>
+
     <Appender type="File" name="LOGS_INTELLIJ" fileName="${logs.intellij}/wtcs-data-systems-validators.log">
       <Layout type="PatternLayout">
         <Pattern>${pattern.default}</Pattern>
       </Layout>
     </Appender>
 
-    <!-- Might work for logging to the Tomcat log directory. -->
-    <!--<Appender type="File" name="LOGS_TOMCAT" fileName="${logs.tomcat}/wtcs-data-systems-validators.log">
+    <Appender type="File" name="LOGS_TOMCAT" fileName="${logs.tomcat}/wtcs-data-systems-validators.log">
       <Layout type="PatternLayout">
         <Pattern>${pattern.default}</Pattern>
       </Layout>
-    </Appender>-->
+    </Appender>
   </Appenders>
 
-  <!-- Set up just the root logger with main appenders. -->
+  <!-- Set up just the root logger with main appenders.
+       For deployment, this is console and Tomcat;
+       for the test suite, console and IntelliJ. -->
   <Loggers>
-    <Root level="INFO">
+    <Root level="ALL">
       <AppenderRef ref="CONSOLE" />
       <AppenderRef ref="LOGS_INTELLIJ" />
     </Root>

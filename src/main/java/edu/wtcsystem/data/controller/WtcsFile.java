@@ -1,8 +1,9 @@
 package edu.wtcsystem.data.controller;
 
+import org.apache.log4j.Logger;
+
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -48,7 +49,5 @@ public class WtcsFile {
 
         return Response.status(Status.OK).entity("validate claims to have gotten the file").build();
     }
-
-
 
 }
