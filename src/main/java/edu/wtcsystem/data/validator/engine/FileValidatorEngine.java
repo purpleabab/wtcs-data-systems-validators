@@ -1,5 +1,13 @@
 package edu.wtcsystem.data.validator.engine;
 
+import edu.wtcsystem.data.entity.client.S9Record;
+import org.apache.log4j.Logger;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import edu.wtcsystem.data.record.DefinedValidatableRecord;
+
 /**
  * Takes a provided file, cuts it up into records (lines), generates record objects which implement
  * DefinedValidatableRecord, and feeds an instance of RecordValidatorEngine
@@ -8,10 +16,27 @@ package edu.wtcsystem.data.validator.engine;
  */
 public class FileValidatorEngine {
 
-    private RecordValidatorEngine rve;
+    private final Logger log = Logger.getLogger(FileValidatorEngine.class.getSimpleName());
 
-    public FileValidatorEngine() {
-        rve = new RecordValidatorEngine();
+    private BufferedReader fileBufferedReader;
+    private RecordValidatorEngine recordValidatorEngine;
+
+    // TODO: Add a static map or something for looking up record types for buildRecordFromLine
+
+    public FileValidatorEngine(BufferedReader fileBufferedReader) {
+        this.fileBufferedReader = fileBufferedReader;
+        recordValidatorEngine = new RecordValidatorEngine();
+    }
+
+    private DefinedValidatableRecord buildRecordFromLine() {
+        try {
+            String fileRecordLine = fileBufferedReader.readLine();
+        }
+        catch (IOException ioe) {
+            log.error("Error while reading uploaded file data!", ioe);
+        }
+        // TODO: return A VALID DefinedValidatableRecord; THIS WILL FAIL AT RUNTIME!!!
+        return new S9Record("");
     }
 
     // method to read the first two characters of a line, compare them to a to-be-defined enum,

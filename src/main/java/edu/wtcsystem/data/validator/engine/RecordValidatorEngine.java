@@ -42,6 +42,7 @@ public class RecordValidatorEngine {
 
         log.debug("Entering RecordValidatorEngine.validateRecord()");
         log.debug("Reading record definition and values");
+
         ValidatableRecordDefinition vrd = record.getRecordDefinition();
         Map<String, String> recordValues = record.getRecordValues();
 
