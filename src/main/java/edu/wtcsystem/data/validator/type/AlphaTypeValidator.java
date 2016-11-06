@@ -4,6 +4,7 @@ package edu.wtcsystem.data.validator.type;
  * @author cwinebrenner
  * @since 2016-10-31
  */
+
 public final class AlphaTypeValidator extends TypeValidatorBase implements TypeValidator {
 
     private final static String ALPHA_TYPE_REGEX = "^[A-Za-z]+$";

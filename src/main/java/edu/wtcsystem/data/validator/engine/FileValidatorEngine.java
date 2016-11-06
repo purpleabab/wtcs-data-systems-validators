@@ -11,19 +11,24 @@ import edu.wtcsystem.data.record.DefinedValidatableRecord;
 /**
  * Takes a provided file, cuts it up into records (lines), generates record objects which implement
  * DefinedValidatableRecord, and feeds an instance of RecordValidatorEngine
+ *
  * @author cwinebrenner
  * @since 2016-11-02
  */
+
 public class FileValidatorEngine {
 
+    private final static String DATA_SYSTEM_ENTITY_CLASS_BASE = "edu.wtcsystem.data.entity";
     private final Logger log = Logger.getLogger(FileValidatorEngine.class.getSimpleName());
 
+    private String dataSystem;
     private BufferedReader fileBufferedReader;
     private RecordValidatorEngine recordValidatorEngine;
 
     // TODO: Add a static map or something for looking up record types for buildRecordFromLine
 
-    public FileValidatorEngine(BufferedReader fileBufferedReader) {
+    public FileValidatorEngine(String dataSystem, BufferedReader fileBufferedReader) {
+        this.dataSystem = dataSystem;
         this.fileBufferedReader = fileBufferedReader;
         recordValidatorEngine = new RecordValidatorEngine();
     }
@@ -31,6 +36,8 @@ public class FileValidatorEngine {
     private DefinedValidatableRecord buildRecordFromLine() {
         try {
             String fileRecordLine = fileBufferedReader.readLine();
+            // TODO: Build a String of DATA_SYSTEM_ENTITY_CLASS_BASE + dataSystem + fileRecordLine.substring(0,1)
+            // TODO: Attempt to instantiate a class of that type, and handle failures to do so
         }
         catch (IOException ioe) {
             log.error("Error while reading uploaded file data!", ioe);

@@ -17,7 +17,7 @@ public class WtcsApplication extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         HashSet h = new HashSet<Class<?>>();
-        h.add(WtcsFile.class);
+        h.add(WtcsFileValidator.class);
         return h;
     }
 

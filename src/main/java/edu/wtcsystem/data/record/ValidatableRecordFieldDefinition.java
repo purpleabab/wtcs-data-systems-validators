@@ -6,6 +6,7 @@ import edu.wtcsystem.data.validator.type.ValidateType;
  * @author cwinebrenner
  * @since 2016-11-02
  */
+
 public class ValidatableRecordFieldDefinition extends RecordFieldDefinition {
 
     private final ValidateType FIELD_VALIDATE_TYPE;

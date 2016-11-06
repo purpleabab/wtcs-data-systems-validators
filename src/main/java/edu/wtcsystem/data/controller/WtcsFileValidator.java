@@ -31,19 +31,19 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
  */
 
 @Path("/file")
-public class WtcsFile {
+public class WtcsFileValidator {
 
     private static final String FORM_FILE_INPUT_NAME = "wtcsFile";
 
-    private final Logger log = Logger.getLogger(WtcsFile.class.getSimpleName());
+    private final Logger log = Logger.getLogger(WtcsFileValidator.class.getSimpleName());
 
     private FileValidatorEngine fve;
 
     @POST
-    @Path("/validate")
+    @Path("/validate/{system}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     //@Produces(MediaType.APPLICATION_JSON)
-    public Response validateFile(MultipartFormDataInput mfdi) {
+    public Response validateFile(@PathParam("system") String dataSystem, MultipartFormDataInput mfdi) {
 
         log.debug("Entering " + this.getClass().getSimpleName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
 
@@ -65,7 +65,7 @@ public class WtcsFile {
                 InputStream wtcsFileStream = ip.getBody(InputStream.class, null);
                 BufferedReader wtcsFileReader = new BufferedReader(new InputStreamReader(wtcsFileStream));
 
-                FileValidatorEngine fve = new FileValidatorEngine(wtcsFileReader);
+                FileValidatorEngine fve = new FileValidatorEngine(dataSystem, wtcsFileReader);
                 // TODO: implement isValid in FileValidatorEngine
                 //fve.isValid();
             }

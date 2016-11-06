@@ -8,6 +8,7 @@ package edu.wtcsystem.data.validator.type;
  * @author cwinebrenner
  * @since 2016-10-31
  */
+
 public final class AlphaNumericTypeValidator extends TypeValidatorBase implements TypeValidator {
 
     private final static String ALPHA_NUMERIC_TYPE_REGEX = "^[0-9a-zA-Z]+$";

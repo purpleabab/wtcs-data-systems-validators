@@ -19,6 +19,7 @@ import java.util.regex.Matcher;
  * @author cwinebrenner
  * @since 2016-10-31
  */
+
 abstract class TypeValidatorBase implements TypeValidator {
 
     private final String TYPE_REGEX;

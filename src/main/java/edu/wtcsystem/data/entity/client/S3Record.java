@@ -4,6 +4,7 @@ package edu.wtcsystem.data.entity.client;
  * @author cwinebrenner
  * @since 2016-10-31
  */
+
 public class S3Record {
     /*
     1-2 Record Type Identifier (e.g. S1, S3, S9)

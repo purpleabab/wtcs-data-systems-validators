@@ -8,6 +8,7 @@ import java.util.HashMap;
  * @author cwinebrenner
  * @since 2016-11-02
  */
+
 public abstract class ValidatableRecord extends Record {
 
     private final ValidatableRecordDefinition RECORD_DEFINITION;

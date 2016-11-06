@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
  * @author cwinebrenner
  * @since 2016-11-02
  */
+
 public class RecordValidatorEngine {
 
     private final Logger log = Logger.getLogger(this.getClass());
