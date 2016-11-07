@@ -1,0 +1,50 @@
+FileValidatorEngine
+
+  -knows the line number (add a counter) while calling readLine()
+  -knows the text from which a record will be created (if you want to keep that around)
+
+  -can get back a Collection from RecordValidatorEnginer about ALL the errors a record has, or null, or empty
+
+  -can build a record error object kept when there is an error with information which will turn into JSON or XML or can be toString()'ed nicely.
+
+  -(IMPORTANT DESIGN QUESTION:) only makes notes of errors, not the disposition of all lines
+
+
+
+RecordValidatorEngine
+
+  -returns a list of ValidatableRecordFieldErrors, or null if there were no errors
+  -see: http://www.codeproject.com/Articles/797453/Is-it-Really-Better-to-Return-an-Empty-List-Inst
+
+
+
+ValidatableRecordError
+
+  -is POSSIBLY created by the FileValidatorEngine, one per line (only after checking to see if there are errors)
+  -if created is added to a List < ValidatableRecordError > stored by FileValidatorEngine, which is returned to WtcsFileValidator
+   and can be dumped into the Response with automagic JSON-ing
+
+  -contains things that are not part of the record, but which the FileValidatorEngine knows
+    * the line number from a counter the FileValidatorEngine uses as it reads lines - permits just some record types
+    * the String the Record is made from
+    * List< field error object > or Map< field name, field error object > from RecordValidatorEngine
+    * any other important things I missed
+
+
+
+ValidatableRecordFieldError
+  ------> Could REALLY just extend from ValidatableRecordFieldDefinition, as it describes a value with an error,
+    and the description of the value is already in the definition (readonly); ONLY the bad value is added on
+
+  -is created only if the field is NOT valid
+
+  -contains
+    * reference to the ValidatableRecordFieldDefinition (already nicely available in the record engine during validation)
+      -reference can be used to get info about this field in the record
+    * String with value that failed/caused the creation of this ValidatableFieldRecordError
+
+  -has
+    * getters for startPosition, endPosition, fieldName, expectedType
+      (which pass through to referenced ValidatableRecordFieldDefinition if not extending)
+    * getter for invalid value
+    * some convenience methods to return one or more descriptions as text of the invalid record
