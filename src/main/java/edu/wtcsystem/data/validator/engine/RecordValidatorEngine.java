@@ -28,7 +28,7 @@ public class RecordValidatorEngine {
 
         try {
             for (ValidateType vt : ValidateType.values()) {
-                log.debug("Adding instance of " + vt.getClass().getSimpleName() + " to TypeValidator pool");
+                log.debug("Adding instance of " + vt.getImplementorClass().getSimpleName() + " to TypeValidator pool");
                 typeValidatorPool.put(vt, vt.getImplementorClass().newInstance());
             }
         }
@@ -56,7 +56,7 @@ public class RecordValidatorEngine {
         for (ValidatableRecordFieldDefinition vrfd : vrd.getRecordFields()) {
 
             log.debug("Starting validation of field " + vrfd.getFieldName());
-            log.debug("Getting " + vrfd.getFieldValidateType().getClass().getSimpleName() + " from TypeValidator pool");
+            log.debug("Getting " + vrfd.getFieldValidateType().getImplementorClass().getSimpleName() + " from TypeValidator pool");
             TypeValidator recordFieldValidator = typeValidatorPool.get(vrfd.getFieldValidateType());
             recordIsValid = recordIsValid && recordFieldValidator.isValid(recordValues.get(vrfd.getFieldName()));
             log.debug("Field " + vrfd.getFieldName() + (recordIsValid ? " passed" : " failed") + " validation");
