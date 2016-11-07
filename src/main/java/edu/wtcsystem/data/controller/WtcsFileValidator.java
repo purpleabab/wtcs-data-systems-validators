@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 
@@ -44,7 +45,7 @@ public class WtcsFileValidator {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     //@Produces(MediaType.APPLICATION_JSON)
     public Response validateFile(@PathParam("system") String dataSystem, MultipartFormDataInput mfdi) {
-
+        boolean isValid = false;
         // TODO: Validate the endpoint "system" param from our systems before going ahead and passing it along as the "dataSystem"
 
         log.debug("Entering " + this.getClass().getSimpleName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -52,6 +53,8 @@ public class WtcsFileValidator {
         // Get FormDataMap, then the InputParts from the form field defined by FORM_FILE_INPUT_NAME
         Map<String, List<InputPart>> fdm = mfdi.getFormDataMap();
         List<InputPart> fdmInputParts = fdm.get(FORM_FILE_INPUT_NAME);
+
+        log.info("FORM_FILE_INPUT_NAME; " + fdmInputParts);
 
         for (InputPart ip : fdmInputParts) {
 
@@ -69,16 +72,26 @@ public class WtcsFileValidator {
                 InputStream wtcsFileStream = ip.getBody(InputStream.class, null);
                 BufferedReader wtcsFileReader = new BufferedReader(new InputStreamReader(wtcsFileStream));
 
+                log.info("inside the try, about to call engine");
+
                 FileValidatorEngine fve = new FileValidatorEngine(dataSystem, wtcsFileReader);
-                fve.validateFile();
+                isValid = fve.validateFile();
                 //fve.isValid() returns whether or not the file passed validation
-            }
-            catch (IOException ioe) {
+            } catch (IOException ioe) {
                 log.error("Error while reading uploaded file data!", ioe);
+            } catch (Exception e) {
+                //TODO kr better error handling
+                log.error("some kind of exception was thrown!" + e.getMessage());
+
             }
         }
-
-        return Response.status(Status.OK).entity("validate claims to have gotten the file").build();
+        String responseMessage;
+        if (isValid) {
+            responseMessage = "file is valid";
+        } else {
+            responseMessage = "file is not valid";
+        }
+        return Response.status(Status.OK).entity(responseMessage).build();
     }
 
     /**

@@ -24,45 +24,43 @@ public class FileValidatorEngine {
     private String dataSystem;
     private BufferedReader fileBufferedReader;
     private RecordValidatorEngine recordValidatorEngine;
-    private boolean fileIsValid;
 
     public FileValidatorEngine(String dataSystem, BufferedReader fileBufferedReader) {
         this.dataSystem = dataSystem;
         this.fileBufferedReader = fileBufferedReader;
         recordValidatorEngine = new RecordValidatorEngine();
-        fileIsValid = false;
     }
 
-    public void validateFile() {
+    public boolean validateFile() {
+        boolean fileIsValid = false;
         try {
-            fileIsValid = true;
             String fileLine;
-
-            while ( ((fileLine = fileBufferedReader.readLine()) != null) && (fileLine.length() != 0) ) {
-                fileIsValid = fileIsValid && recordValidatorEngine.validateRecord(buildRecordFromFileLine(fileLine));
+            fileIsValid = true;
+            while (((fileLine = fileBufferedReader.readLine()) != null) && (fileLine.length() != 0)) {
+                log.info("inside validateFile, fileLine is: " + fileLine.toString());
+                //only validate S9 records
+                if (fileLine.substring(0, 2).equalsIgnoreCase("S9")) {
+                    fileIsValid = fileIsValid && recordValidatorEngine.validateRecord(new S9Record(fileLine));
+                }
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             log.error("Error while reading uploaded file data!", ioe);
         }
-    }
-
-    // TODO: This shouldn't be called unless we know that the line isn't null; move that out of this class!
-    private DefinedValidatableRecord buildRecordFromFileLine(String fileLine) {
-
-        // TODO: Consider better validation of Record type
-
-        String dataSystemRecordClass = DATA_SYSTEM_ENTITY_CLASS_BASE + "." + dataSystem + "." + fileLine.substring(0,2) + "Record";
-        log.info("Need to build instance of " + dataSystemRecordClass);
-        // TODO: Attempt to instantiate a class of that type, and handle failures to do so - try classloading it first?
-
-        // TODO: return a valid DefinedValidatableRecord - using DummyRecord to force return
-        return new DummyRecord("00");
-    }
-
-    public boolean isValid() {
         return fileIsValid;
     }
+
+//    // TODO: This shouldn't be called unless we know that the line isn't null; move that out of this class!
+//    private DefinedValidatableRecord S9R(String fileLine) {
+//
+//        // TODO: Consider better validation of Record type
+//
+//        //String dataSystemRecordClass = DATA_SYSTEM_ENTITY_CLASS_BASE + "." + dataSystem + "." + fileLine.substring(0,2) + "Record";
+//        // TODO: Attempt to instantiate a class of that type, and handle failures to do so - try classloading it first?
+
+//        // TODO: return a valid DefinedValidatableRecord - using DummyRecord to force return
+//        return new DummyRecord("00");
+//    }
+
 
     // TODO: If doing full error reporting, wrapper the record into another reporting object as a DefinedValidatableRecord
     // Consider wrapping the record in something that knows what line it came from, and some other stuff)

@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Intended to be instantiated once per thread doing validation work.
+ *
  * @author cwinebrenner
  * @since 2016-11-02
  */
@@ -31,8 +32,7 @@ public class RecordValidatorEngine {
                 log.debug("Adding instance of " + vt.getImplementorClass().getSimpleName() + " to TypeValidator pool");
                 typeValidatorPool.put(vt, vt.getImplementorClass().newInstance());
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("ERROR attempting to set up RecordValidatorEngine TypeValidator pool: ", e);
         }
 
