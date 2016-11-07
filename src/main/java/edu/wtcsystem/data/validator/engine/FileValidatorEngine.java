@@ -38,7 +38,7 @@ public class FileValidatorEngine {
             fileIsValid = true;
             String fileLine;
 
-            while ((fileLine = fileBufferedReader.readLine()) != null) {
+            while ( ((fileLine = fileBufferedReader.readLine()) != null) && (fileLine.length() != 0) ) {
                 fileIsValid = fileIsValid && recordValidatorEngine.validateRecord(buildRecordFromFileLine(fileLine));
             }
         }
