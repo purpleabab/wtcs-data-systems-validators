@@ -45,6 +45,8 @@ public class WtcsFileValidator {
     //@Produces(MediaType.APPLICATION_JSON)
     public Response validateFile(@PathParam("system") String dataSystem, MultipartFormDataInput mfdi) {
 
+        // TODO: Validate the endpoint "system" param from our systems before going ahead and passing it along as the "dataSystem"
+
         log.debug("Entering " + this.getClass().getSimpleName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
 
         // Get FormDataMap, then the InputParts from the form field defined by FORM_FILE_INPUT_NAME
@@ -54,9 +56,11 @@ public class WtcsFileValidator {
         for (InputPart ip : fdmInputParts) {
 
             MultivaluedMap<String, String> ipHeader = ip.getHeaders();
+
+            // Debugging output of form/multipart headers
             if (log.isDebugEnabled()) {
                 for (String k : ipHeader.keySet()) {
-                    log.debug("INFO_LOG_STATEMENT: InputPart headers: " + k + " = " + ipHeader.get(k));
+                    log.debug("InputPart headers: " + k + " = " + ipHeader.get(k));
                 }
             }
 
@@ -66,15 +70,12 @@ public class WtcsFileValidator {
                 BufferedReader wtcsFileReader = new BufferedReader(new InputStreamReader(wtcsFileStream));
 
                 FileValidatorEngine fve = new FileValidatorEngine(dataSystem, wtcsFileReader);
-                // TODO: implement isValid in FileValidatorEngine
-                //fve.isValid();
+                fve.validateFile();
+                //fve.isValid() returns whether or not the file passed validation
             }
             catch (IOException ioe) {
                 log.error("Error while reading uploaded file data!", ioe);
             }
-
-
-
         }
 
         return Response.status(Status.OK).entity("validate claims to have gotten the file").build();
