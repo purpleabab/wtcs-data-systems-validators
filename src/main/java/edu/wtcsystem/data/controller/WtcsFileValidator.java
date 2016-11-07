@@ -1,5 +1,6 @@
 package edu.wtcsystem.data.controller;
 
+import edu.wtcsystem.data.entity.client.FileErrorObject;
 import org.apache.log4j.Logger;
 
 import edu.wtcsystem.data.validator.engine.FileValidatorEngine;
@@ -46,6 +47,7 @@ public class WtcsFileValidator {
     //@Produces(MediaType.APPLICATION_JSON)
     public Response validateFile(@PathParam("system") String dataSystem, MultipartFormDataInput mfdi) {
         boolean isValid = false;
+        FileErrorObject fileErrorObject = new FileErrorObject();
         // TODO: Validate the endpoint "system" param from our systems before going ahead and passing it along as the "dataSystem"
 
         log.debug("Entering " + this.getClass().getSimpleName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -75,7 +77,10 @@ public class WtcsFileValidator {
                 log.info("inside the try, about to call engine");
 
                 FileValidatorEngine fve = new FileValidatorEngine(dataSystem, wtcsFileReader);
-                isValid = fve.validateFile();
+
+                 fileErrorObject = fve.validateFile();
+
+
                 //fve.isValid() returns whether or not the file passed validation
             } catch (IOException ioe) {
                 log.error("Error while reading uploaded file data!", ioe);
@@ -86,10 +91,11 @@ public class WtcsFileValidator {
             }
         }
         String responseMessage;
-        if (isValid) {
+        if (fileErrorObject==null) {
             responseMessage = "file is valid";
         } else {
-            responseMessage = "file is not valid";
+            //TODO nicer display of all errors here
+            responseMessage = "file is not valid.  fileErrorObject.getListRecordErrors().size(): " + fileErrorObject.getListRecordErrors().size();
         }
         return Response.status(Status.OK).entity(responseMessage).build();
     }

@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.wtcsystem.data.record.DefinedValidatableRecord;
 
@@ -24,29 +26,55 @@ public class FileValidatorEngine {
     private String dataSystem;
     private BufferedReader fileBufferedReader;
     private RecordValidatorEngine recordValidatorEngine;
+    private int recordLineCounter;
 
     public FileValidatorEngine(String dataSystem, BufferedReader fileBufferedReader) {
         this.dataSystem = dataSystem;
         this.fileBufferedReader = fileBufferedReader;
         recordValidatorEngine = new RecordValidatorEngine();
+        this.recordLineCounter = recordLineCounter;
     }
 
-    public boolean validateFile() {
-        boolean fileIsValid = false;
+
+    /**
+     * validates file one line at a time
+     *
+     * Returns null if file is valid.
+     * returns FileErrorObject which is a list of record error objects
+     */
+    public FileErrorObject validateFile() {
+        FileErrorObject fileErrorObject = new FileErrorObject();
+        RecordErrorObject recordErrorObject = new RecordErrorObject();
+        int recordLineCounter = 0;
+
         try {
             String fileLine;
-            fileIsValid = true;
             while (((fileLine = fileBufferedReader.readLine()) != null) && (fileLine.length() != 0)) {
                 log.info("inside validateFile, fileLine is: " + fileLine.toString());
+                recordLineCounter++;
+                log.info("recordLineCounter: " +recordLineCounter);
                 //only validate S9 records
                 if (fileLine.substring(0, 2).equalsIgnoreCase("S9")) {
-                    fileIsValid = fileIsValid && recordValidatorEngine.validateRecord(new S9Record(fileLine));
+
+
+                    //loop through each record, setting isValid and error object on each record
+
+                    //if a not-null recordErrorObject is returned by the validateRecord, add it to the list that becomes the FileErrorObject
+                    //there is one recordErrorObject for each file line having an erro
+                    recordErrorObject=recordValidatorEngine.validateRecord(new S9Record(fileLine));
+
+                    //if record was valid, recordErrorObject will be null, don't add it to fileErrorObject
+                    if(recordErrorObject!=null){
+                        fileErrorObject.getListRecordErrors().add(recordLineCounter,recordErrorObject);
+                    }
+
+                    //fileIsValid = fileIsValid && recordValidatorEngine.validateRecord(new S9Record(fileLine));
                 }
             }
         } catch (IOException ioe) {
             log.error("Error while reading uploaded file data!", ioe);
         }
-        return fileIsValid;
+        return fileErrorObject;
     }
 
 //    // TODO: This shouldn't be called unless we know that the line isn't null; move that out of this class!
