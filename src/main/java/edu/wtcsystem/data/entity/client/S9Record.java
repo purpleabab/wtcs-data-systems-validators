@@ -7,6 +7,7 @@ import edu.wtcsystem.data.validator.type.ValidateType;
  * @author cwinebrenner
  * @since 2016-11-02
  */
+
 public class S9Record extends ValidatableRecord implements DefinedValidatableRecord {
 
     private static ValidatableRecordDefinition DEFINITION;

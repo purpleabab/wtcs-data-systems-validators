@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * @author cwinebrenner
  * @since 2016-11-02
  */
+
 public class ValidatableRecordDefinition {
 
     private final String RECORD_TYPE_NAME;

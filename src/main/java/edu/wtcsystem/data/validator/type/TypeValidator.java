@@ -8,6 +8,7 @@ package edu.wtcsystem.data.validator.type;
  * @author cwinebrenner
  * @since 2016-10-31
  */
+
 public interface TypeValidator {
 
     /**

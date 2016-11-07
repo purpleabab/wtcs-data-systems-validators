@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
  * @author karen.rahmeier
  * @since 2016-10-31
  */
+
 public class OldS9Record {
 
     private final Logger log = Logger.getLogger(this.getClass());

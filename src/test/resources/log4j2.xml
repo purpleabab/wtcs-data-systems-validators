@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Configuration name="WTCS-Data-Systems-Validators-Logger" strict="true" status="DEBUG" monitorInternal="5">
+<Configuration name="WTCS-Data-Systems-Validators-Logger" strict="true" status="INFO" monitorInternal="5">
   <!-- Sets up a configuration named "WTCS-Data-Systems-Validators-Logger,"
        using strict XML syntax for the configuration file, with internal
        Log4j2 level is set to value of status, rescans of file for changes
@@ -14,7 +14,6 @@
 
   <!-- Set up appenders: CONSOLE (System.out/STDOUT), the IntelliJ project log directory,
        and the default server "logs" folder in a Tomcat installation.
-       TODO: Add JBoss EAP logging support
        Note that since the Maven layout in IntelliJ puts the log directory in the same relative
        position versus both src and test, the same config file works for both unless differently
        named log files are desired, and also regardless of platform or install location. -->

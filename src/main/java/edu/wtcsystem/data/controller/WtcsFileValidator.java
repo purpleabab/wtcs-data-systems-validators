@@ -31,19 +31,21 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
  */
 
 @Path("/file")
-public class WtcsFile {
+public class WtcsFileValidator {
 
     private static final String FORM_FILE_INPUT_NAME = "wtcsFile";
 
-    private final Logger log = Logger.getLogger(WtcsFile.class.getSimpleName());
+    private final Logger log = Logger.getLogger(WtcsFileValidator.class.getSimpleName());
 
     private FileValidatorEngine fve;
 
     @POST
-    @Path("/validate")
+    @Path("/validate/{system}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     //@Produces(MediaType.APPLICATION_JSON)
-    public Response validateFile(MultipartFormDataInput mfdi) {
+    public Response validateFile(@PathParam("system") String dataSystem, MultipartFormDataInput mfdi) {
+
+        // TODO: Validate the endpoint "system" param from our systems before going ahead and passing it along as the "dataSystem"
 
         log.debug("Entering " + this.getClass().getSimpleName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
 
@@ -54,9 +56,11 @@ public class WtcsFile {
         for (InputPart ip : fdmInputParts) {
 
             MultivaluedMap<String, String> ipHeader = ip.getHeaders();
+
+            // Debugging output of form/multipart headers
             if (log.isDebugEnabled()) {
                 for (String k : ipHeader.keySet()) {
-                    log.debug("INFO_LOG_STATEMENT: InputPart headers: " + k + " = " + ipHeader.get(k));
+                    log.debug("InputPart headers: " + k + " = " + ipHeader.get(k));
                 }
             }
 
@@ -65,16 +69,13 @@ public class WtcsFile {
                 InputStream wtcsFileStream = ip.getBody(InputStream.class, null);
                 BufferedReader wtcsFileReader = new BufferedReader(new InputStreamReader(wtcsFileStream));
 
-                FileValidatorEngine fve = new FileValidatorEngine(wtcsFileReader);
-                // TODO: implement isValid in FileValidatorEngine
-                //fve.isValid();
+                FileValidatorEngine fve = new FileValidatorEngine(dataSystem, wtcsFileReader);
+                fve.validateFile();
+                //fve.isValid() returns whether or not the file passed validation
             }
             catch (IOException ioe) {
                 log.error("Error while reading uploaded file data!", ioe);
             }
-
-
-
         }
 
         return Response.status(Status.OK).entity("validate claims to have gotten the file").build();
