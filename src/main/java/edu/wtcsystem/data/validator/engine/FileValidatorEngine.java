@@ -15,6 +15,7 @@ import edu.wtcsystem.data.record.DefinedValidatableRecord;
  * DefinedValidatableRecord, and feeds an instance of RecordValidatorEngine
  *
  * @author cwinebrenner
+ * @author karen.rahmeier
  * @since 2016-11-02
  */
 
@@ -35,12 +36,11 @@ public class FileValidatorEngine {
         this.recordLineCounter = recordLineCounter;
     }
 
-
     /**
      * validates file one line at a time
-     *
+     * <p>
      * Returns null if file is valid.
-     * returns FileErrorObject which is a list of record error objects
+     * returns FileErrorObject which is a list of record error objects, if file is not valid
      */
     public FileErrorObject validateFile() {
         FileErrorObject fileErrorObject = new FileErrorObject();
@@ -50,47 +50,54 @@ public class FileValidatorEngine {
         try {
             String fileLine;
             while (((fileLine = fileBufferedReader.readLine()) != null) && (fileLine.length() != 0)) {
+
                 log.info("inside validateFile, fileLine is: " + fileLine.toString());
                 recordLineCounter++;
-                log.info("recordLineCounter: " +recordLineCounter);
-                //only validate S9 records
+                log.info("recordLineCounter: " + recordLineCounter);
+
+                //only validate S9 records for now...
                 if (fileLine.substring(0, 2).equalsIgnoreCase("S9")) {
-
-
-                    //loop through each record, setting isValid and error object on each record
+                    recordErrorObject = recordValidatorEngine.validateRecord(new S9Record(fileLine));
 
                     //if a not-null recordErrorObject is returned by the validateRecord, add it to the list that becomes the FileErrorObject
-                    //there is one recordErrorObject for each file line having an erro
-                    recordErrorObject=recordValidatorEngine.validateRecord(new S9Record(fileLine));
-
-                    //if record was valid, recordErrorObject will be null, don't add it to fileErrorObject
-                    if(recordErrorObject!=null){
-                        fileErrorObject.getListRecordErrors().add(recordLineCounter,recordErrorObject);
+                    if (recordErrorObject != null) {
+                        //if no listRecordsErrors exists yet, create it
+                        if (fileErrorObject.getListRecordErrors() == null) {
+                            fileErrorObject.setListRecordErrors(new ArrayList<RecordErrorObject>());
+                        }
+                        fileErrorObject.getListRecordErrors().add(recordLineCounter, recordErrorObject);
                     }
-
-                    //fileIsValid = fileIsValid && recordValidatorEngine.validateRecord(new S9Record(fileLine));
+                    //if record was valid, recordErrorObject will be null, do nothing, don't add it to fileErrorObject
                 }
             }
+
         } catch (IOException ioe) {
-            log.error("Error while reading uploaded file data!", ioe);
+            log.error("IOE error while reading uploaded file data!", ioe);
+        } catch (Exception e) {
+            log.error("Unexpected error while reading uploaded file data!", e);
+        }
+
+        //TODO refactor to be better about returning null object.
+        //if there are no record errors in the fileErrorObject, set the object to null
+        if(fileErrorObject.getListRecordErrors().size()==0){
+            fileErrorObject = new FileErrorObject();
         }
         return fileErrorObject;
     }
 
-//    // TODO: This shouldn't be called unless we know that the line isn't null; move that out of this class!
-//    private DefinedValidatableRecord S9R(String fileLine) {
-//
-//        // TODO: Consider better validation of Record type
-//
-//        //String dataSystemRecordClass = DATA_SYSTEM_ENTITY_CLASS_BASE + "." + dataSystem + "." + fileLine.substring(0,2) + "Record";
-//        // TODO: Attempt to instantiate a class of that type, and handle failures to do so - try classloading it first?
+ /*   TODO possible refactor to more abstract validation of more than just S9 records
 
-//        // TODO: return a valid DefinedValidatableRecord - using DummyRecord to force return
-//        return new DummyRecord("00");
-//    }
+    // This shouldn't be called unless we know that the line isn't null; move that out of this class!
+    private DefinedValidatableRecord S9R(String fileLine) {
 
+        //Consider better validation of Record type
 
-    // TODO: If doing full error reporting, wrapper the record into another reporting object as a DefinedValidatableRecord
-    // Consider wrapping the record in something that knows what line it came from, and some other stuff)
+        //String dataSystemRecordClass = DATA_SYSTEM_ENTITY_CLASS_BASE + "." + dataSystem + "." + fileLine.substring(0,2) + "Record";
+        //Attempt to instantiate a class of that type, and handle failures to do so - try classloading it first?
+
+        // return a valid DefinedValidatableRecord - using DummyRecord to force return
+        return new DummyRecord("00");
+    }
+*/
 
 }

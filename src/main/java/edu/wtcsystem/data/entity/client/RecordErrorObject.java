@@ -17,16 +17,11 @@ public class RecordErrorObject {
     public RecordErrorObject() {
     }
 
-    public RecordErrorObject(int recordLineCounter, String fieldName, String expectedFieldDataTypeValues, String actualFieldValue) {
+    public RecordErrorObject(String fieldName, String expectedFieldDataTypeValues, String actualFieldValue) {
         this.fieldName = fieldName;
         this.expectedFieldDataTypeValues = expectedFieldDataTypeValues;
         this.actualFieldValue = actualFieldValue;
     }
-
-    public Logger getLog() {
-        return log;
-    }
-
 
     public String getFieldName() {
         return fieldName;
@@ -54,8 +49,7 @@ public class RecordErrorObject {
 
     @Override
     public String toString() {
-        return "RecordErrorObject{" +
-                ", fieldName='" + fieldName + '\'' +
+        return "RecordErrorObject{fieldName='" + fieldName + '\'' +
                 ", expectedFieldDataTypeValues='" + expectedFieldDataTypeValues + '\'' +
                 ", actualFieldValue='" + actualFieldValue + '\'' +
                 '}';

@@ -29,6 +29,7 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
  * https://www.mkyong.com/webservices/jax-rs/file-upload-example-in-resteasy/
  *
  * @author cwinebrenner
+ * @author karen.rahmeier
  * @since 2016-11-04
  */
 
@@ -74,28 +75,25 @@ public class WtcsFileValidator {
                 InputStream wtcsFileStream = ip.getBody(InputStream.class, null);
                 BufferedReader wtcsFileReader = new BufferedReader(new InputStreamReader(wtcsFileStream));
 
-                log.info("inside the try, about to call engine");
-
                 FileValidatorEngine fve = new FileValidatorEngine(dataSystem, wtcsFileReader);
+                fileErrorObject = fve.validateFile();
 
-                 fileErrorObject = fve.validateFile();
-
-
-                //fve.isValid() returns whether or not the file passed validation
             } catch (IOException ioe) {
                 log.error("Error while reading uploaded file data!", ioe);
             } catch (Exception e) {
-                //TODO kr better error handling
-                log.error("some kind of exception was thrown!" + e.getMessage());
-
+                log.error("Inside WtcsFileValidator, some kind of exception was thrown!" + e.getMessage());
             }
         }
         String responseMessage;
-        if (fileErrorObject==null) {
-            responseMessage = "file is valid";
+        if (fileErrorObject.getListRecordErrors() != null && fileErrorObject.getListRecordErrors().size() == 0) {
+            responseMessage = "Happy day, file is valid!";
         } else {
             //TODO nicer display of all errors here
-            responseMessage = "file is not valid.  fileErrorObject.getListRecordErrors().size(): " + fileErrorObject.getListRecordErrors().size();
+            log.info("Inside WtcsFileValidator, file not valid, we know:");
+            log.info("fileErrorObject.getListRecordErrors().size(): " + fileErrorObject.getListRecordErrors().size());
+            log.info("fileErrorObject.getDisplayOfAllErrors()" + fileErrorObject.getDisplayOfAllErrors());
+
+            responseMessage = "Unhappy day, file is not valid.  The following errors are found: " + fileErrorObject.getDisplayOfAllErrors();
         }
         return Response.status(Status.OK).entity(responseMessage).build();
     }
