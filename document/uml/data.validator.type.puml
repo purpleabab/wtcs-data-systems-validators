@@ -1,0 +1,77 @@
+@startuml
+package data.validator.type <<Frame>> {
+
+interface TypeValidator {
+  +boolean isValid(String)
+}
+
+abstract class TypeValidatorBase {
+  -String:TYPE_REGEX
+  -Pattern:TYPE_PATTERN
+  -Matcher:TYPE_MATCHER
+  ..
+  -String:WHITESPACE_REGEX
+  -Pattern:WHITESPACE_PATTERN
+  -Matcher:WHITESPACE_PATTERN
+  ==
+  +TypeValidatorBase(String regex)
+  +boolean isValid(String)
+}
+
+class NumericTypeValidator<? extends TypeValidatorBase> {
+  -{static} String:NUMERIC_TYPE_REGEX
+  +NumericTypeValidator()
+  +String toString()
+}
+class AlphaNumericTypeValidator<? extends TypeValidatorBase> {
+  -{static} String:ALPHA_NUMERIC_TYPE_REGEX
+  +AlphaNumericTypeValidator()
+  +String toString()
+}
+class AlphaTypeValidator<? extends TypeValidatorBase> {
+  -{static} String:ALPHA_TYPE_REGEX
+  +AlphaTypeValidator()
+  +String toString()
+}
+
+enum ValidateType {
+  NUMERIC
+  ALPHA
+  ALPHANUMERIC
+  +Class<? extends TypeValidatorBase> getImplementorClass()
+  +String toString()
+}
+
+NumericTypeValidator *-right- TypeValidatorBase
+AlphaTypeValidator *-- TypeValidatorBase
+AlphaNumericTypeValidator *-- TypeValidatorBase
+
+TypeValidatorBase --|> TypeValidator
+
+note bottom of ValidateType
+Used to specify what type of characters should be
+expected in each field of a record.
+
+Members are implicitly static extensions of the
+enum, and can provide the implementing Class
+which can validate them, for use via reflection.
+end note
+
+note right of TypeValidatorBase
+Implements all of the logic needed to validate
+a String from a provided regular expression,
+permitting the provided regex or whitespace.
+
+Other types of regex-based validators can
+extend this base class, providing only the
+regex against which to validate.
+end note
+
+note left of TypeValidator
+All validators derived from TypeValidatorBase
+implement TypeValidator, and can be treated as
+such when doing validation.
+end note
+
+}
+@enduml

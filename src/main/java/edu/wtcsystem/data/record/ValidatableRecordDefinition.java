@@ -21,8 +21,8 @@ public class ValidatableRecordDefinition {
         recordFields = new ArrayList<>();
     }
 
-    public void add(ValidatableRecordFieldDefinition recordDefinition) {
-        recordFields.add(recordDefinition);
+    public void add(ValidatableRecordFieldDefinition recordFieldDefinition) {
+        recordFields.add(recordFieldDefinition);
     }
 
     public String getRecordTypeName() {
