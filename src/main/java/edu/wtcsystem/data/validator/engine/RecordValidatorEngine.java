@@ -76,6 +76,7 @@ public class RecordValidatorEngine {
             if (!recordFieldValidator.isValid(recordValues.get(vrfd.getFieldName()))) {
                 recordIsValid = false;
                 //make error object for that field
+                errorObject = new RecordErrorObject();
                 errorObject.setFieldName(vrfd.getFieldName());
                 errorObject.setExpectedFieldDataTypeValues(vrfd.getFieldValidateType().getImplementorClass().getSimpleName().toString());
                 errorObject.setActualFieldValue(recordValues.get(vrfd.getFieldName()));

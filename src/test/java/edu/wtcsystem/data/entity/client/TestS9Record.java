@@ -18,11 +18,11 @@ public class TestS9Record {
 
     private final static Logger log = Logger.getLogger(TestS9Record.class.getSimpleName());
 
-    final static String RECORD_TYPE_NAME = "S9Record";
-    final static int VALID_S9_RECORD_MAX_LENGTH = 31;
-    final static String VALID_S9_RECORD = "S9102017123456789504999      12";
-    final static String NOT_VALID_S9_RECORD = "S9AA20171234B67CD504999      W2";
-    final static String NOT_VALID_S9_RECORD_TOO_SHORT = "S91020112";
+    final static private String RECORD_TYPE_NAME = "S9Record";
+    final static private int VALID_S9_RECORD_MAX_LENGTH = 31;
+    final static  private String VALID_S9_RECORD = "S9102017123456789504999      12";
+    final static private String NOT_VALID_S9_RECORD = "S9AA20171234B67CD504999      W2";
+    final static private String NOT_VALID_S9_RECORD_TOO_SHORT = "S91020112";
 
     final static RecordValidatorEngine RVE = new RecordValidatorEngine();
 
@@ -49,19 +49,5 @@ public class TestS9Record {
         assertNotNull("S9Record: Can't read list of fields!", testFieldsDefinition);
     }
 
-    // TODO: Maybe these two tests should go in a tester for the RecordValidationEngine
-    @Test
-    public void testValidS9RecordPasses() {
-        S9Record testS9 = new S9Record(VALID_S9_RECORD);
-        boolean testS9IsValid = RVE.validateRecord(testS9);
-        assertTrue("Valid S9 record failed validation!", testS9IsValid);
-    }
-
-    @Test
-    public void testInvalidS9RecordFails() {
-        S9Record testS9 = new S9Record(NOT_VALID_S9_RECORD);
-        boolean testS9IsValid = RVE.validateRecord(testS9);
-        assertFalse("Invalid S9 record passed validation!", testS9IsValid);
-    }
 
 }
