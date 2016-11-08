@@ -88,7 +88,7 @@ public class RecordValidatorEngine {
             log.debug(vrd.getRecordTypeName() + " is valid so far: " + recordIsValid);
 
             // Fail the record and quit checking if any individual field fails to validate
-            // TODO: If implementing error logging, instead of failing fast here add an object describing the error to some Collection and do not break
+            // TODO: If implementing error logging with multiple data type errors per record line, instead of failing fast here, enhance errorObject code above to handle multiples
             if (!recordIsValid) {
                 log.debug(vrd.getRecordTypeName() + " failed validation on " + recordValues.get(vrfd.getFieldName()));
                 log.debug(vrd.getRecordTypeName() + " validation failing fast; any remaining fields will not be validated!");
@@ -105,7 +105,5 @@ public class RecordValidatorEngine {
 
         return errorObject;
     }
-
-    // TODO: If implementing error logging, write a method which takes an error reporting object with a wrappered DefinedValidatableRecord
 
 }

@@ -85,14 +85,10 @@ public class WtcsFileValidator {
             }
         }
         String responseMessage;
-        if (fileErrorObject.getListRecordErrors() != null && fileErrorObject.getListRecordErrors().size() == 0) {
+        if (fileErrorObject == null || fileErrorObject.getListRecordErrors() == null) {
             responseMessage = "Happy day, file is valid!";
         } else {
-            //TODO nicer display of all errors here
-            log.info("Inside WtcsFileValidator, file not valid, we know:");
-            log.info("fileErrorObject.getListRecordErrors().size(): " + fileErrorObject.getListRecordErrors().size());
             log.info("fileErrorObject.getDisplayOfAllErrors()" + fileErrorObject.getDisplayOfAllErrors());
-
             responseMessage = "Unhappy day, file is not valid.  The following errors are found: " + fileErrorObject.getDisplayOfAllErrors();
         }
         return Response.status(Status.OK).entity(responseMessage).build();
