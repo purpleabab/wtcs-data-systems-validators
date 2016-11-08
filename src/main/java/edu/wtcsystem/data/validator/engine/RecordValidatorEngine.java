@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
  * Intended to be instantiated once per thread doing validation work.
  *
  * @author cwinebrenner
+ * @author karen.rahmeier
  * @since 2016-11-02
  */
 
