@@ -33,7 +33,7 @@ public class OldS9Record {
     private String programGraduate;
     private String technicalSkillsAttainment;
 
-    // TODO: Implement error handling. Ideally return  more than just boolean from isValid. Ideally return record line and character with expected and actual result.
+    // TODO: deprecated: this code no longer used.  11/8/2016 Implement error handling. Ideally return  more than just boolean from isValid. Ideally return record line and character with expected and actual result.
 
     public OldS9Record(String s9Record) {
 
@@ -58,7 +58,7 @@ public class OldS9Record {
      */
     public boolean isValid() {
         boolean isValid = true;
-        // TODO: do validation without a bunch of if statements
+        // TODO: deprecated: this code no longer used. 11/8/2016 refactored... do validation without a bunch of if statements
 
         if (!(new AlphaNumericTypeValidator().isValid(recordTypeIdentifier))) {
             isValid = false;

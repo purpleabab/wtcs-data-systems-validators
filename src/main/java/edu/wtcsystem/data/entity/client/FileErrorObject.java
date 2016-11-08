@@ -45,7 +45,6 @@ public class FileErrorObject {
                 recordErrorObject = listRecordErrors.get(i);
                 displayMessage = displayMessage + recordErrorObject.toString();
             }
-            displayMessage = ":";
         } else {
             displayMessage = "No errors found.";
         }

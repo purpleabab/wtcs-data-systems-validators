@@ -52,7 +52,6 @@ public class FileValidatorEngine {
             while (((fileLine = fileBufferedReader.readLine()) != null) && (fileLine.length() != 0)) {
 
                 log.info("inside validateFile, fileLine is: " + fileLine.toString());
-                recordLineCounter++;
                 log.info("recordLineCounter: " + recordLineCounter);
 
                 //only validate S9 records for now...
@@ -65,10 +64,14 @@ public class FileValidatorEngine {
                         if (fileErrorObject.getListRecordErrors() == null) {
                             fileErrorObject.setListRecordErrors(new ArrayList<RecordErrorObject>());
                         }
+                        log.info("about to add reo to feo, recordLineCounter: " + recordLineCounter + " recordErrorObject.toString " + recordErrorObject.toString());
+                        log.info("fileErrorObject.getListRecordErrors().size(): " + fileErrorObject.getListRecordErrors().size());
+                        //add recordError to array list of errors
                         fileErrorObject.getListRecordErrors().add(recordLineCounter, recordErrorObject);
                     }
                     //if record was valid, recordErrorObject will be null, do nothing, don't add it to fileErrorObject
                 }
+                recordLineCounter++;
             }
 
         } catch (IOException ioe) {
@@ -77,12 +80,12 @@ public class FileValidatorEngine {
             log.error("Unexpected error while reading uploaded file data!", e);
         }
 
-        //TODO refactor to be better about returning null object.
-        //if there are no record errors in the fileErrorObject, set the object to null
-        if(fileErrorObject.getListRecordErrors().size()==0){
-            fileErrorObject = new FileErrorObject();
+        //TODO consider refactor to be better about returning null object.
+        if (fileErrorObject.getListRecordErrors() == null) {
+            return null;
+        } else {
+            return fileErrorObject;
         }
-        return fileErrorObject;
     }
 
  /*   TODO possible refactor to more abstract validation of more than just S9 records
