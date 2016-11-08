@@ -1,26 +1,120 @@
 @startuml
+package data.record <<Frame>> {
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
+/'
+===============
+DEFINE ENTITIES
+===============
+'/
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
+  interface DefinedValidatableRecord <<interface>> {
+    +ValidatableRecordDefinition getRecordDefinition()
+    +Map<String, String> getRecordValues()
+  }
 
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
+  abstract class Record {
+    ~String:RECORD_LINE_TEXT
+    __
+    ~Record(String recordLine)
+  }
 
-class ArrayList {
-Object[] elementData
-size()
+  abstract class ValidatableRecord {
+    -ValidatableRecordDefinition:RECORD_DEFINITION
+    -Map<String, String>:RECORD_VALUES
+    __
+    +ValidatableRecord(String recordLine, ValidatableRecordDefinition recordDefinition)
+
+    ..DefinedValidatableRecord..
+    +ValidatableRecordDefinition getRecordDefinition()
+    +Map<String, String> getRecordValues()
+  }
+
+  abstract class RecordFieldDefinition {
+    ~String:FIELD_NAME
+    ~int:FIELD_START_POSITION
+    ~int:FIELD_END_POSITION
+    __
+    ~RecordFieldDefinition(String fieldName, int startPosition, int endPosition)
+    ..Getters..
+    +String getFieldName()
+    +int getFieldStartPosition()
+    +int getFieldEndPosition()
+  }
+
+  class ValidatableRecordFieldDefinition {
+    -ValidateType:FIELD_VALIDATE_TYPE
+    __
+    +ValidatableRecordFieldDefinition(String fieldName, int startPosition, int endPosition, ValidateType fieldType)
+    +String toString()
+    ..Getters..
+    +ValidateType getFieldValidateType()
+  }
+
+  class ValidatableRecordDefinition {
+    -String:RECORD_TYPE_NAME
+    -int:RECORD_MAX_LENGTH
+    -List<ValidatableRecordFieldDefinition>:recordFields
+    __
+    +ValidatableRecord(String recordTypeName, int recordMaxLength)
+    ..Working With Associated Fields..
+    +add(ValidatableRecordFieldDefinition recordFieldDefinition)
+    +List<ValidatableRecordFieldDefinition> getRecordFields()
+    ..Getters..
+    +String getRecordTypeName()
+    +int getRecordMaxLength()
+  }
+
+/'
+=================================
+DEFINE RELATIONS BETWEEN ENTITIES
+=================================
+'/
+
+ValidatableRecord --|> Record:extends
+ValidatableRecord ..|> DefinedValidatableRecord:implements
+
+ValidatableRecordFieldDefinition --|> RecordFieldDefinition:extends
+ValidatableRecordDefinition --> "1..many" ValidatableRecordFieldDefinition:contains >
+
+/'
+============================
+NOTES ABOUT VARIOUS ENTITIES
+============================
+'/
+
+note as NoteRecordAndDefinition
+<b>ValidatableRecord</b> contains a reference to a
+definition of fields in the record, so that the parser
+knows how to read the text provided (length checked)
+and store field name and value pairs in the Map that
+contains field values.
+
+Record classes for specific systems in the <i>data.entity</i>
+package extend this abstract class, and contain a
+<b>static ValidatableRecordDefinition</b>
+<i>specific to that record class</i> (e.g. Client S3Record),
+which is then used to define each instance of that
+specific record class.
+end note
+
+ValidatableRecord .. NoteRecordAndDefinition
+NoteRecordAndDefinition .. ValidatableRecordDefinition
+
+note bottom of DefinedValidatableRecord
+Interface representing the minimum information needed to
+validate an instance of a record: a reference to the
+<b>static ValidatableRecordDefinition</b> associated with the
+record class and the Map<String, String> containing the
+field names and values stored for the record.
+
+RecordValidatorEngines can validate objects implementing
+this interface.
+end note
+
+note left of RecordFieldDefinition
+Bare minimum for a field in a record: name of the field
+and position on the line of text that makes up the record.
+end note
+
 }
-
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
-}
-
 @enduml
