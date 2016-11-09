@@ -63,7 +63,7 @@ public class WtcsFileValidator {
 
             MultivaluedMap<String, String> ipHeader = ip.getHeaders();
 
-            // Debugging output of form/multipart headers
+            // Debugging output of form/multi-part headers
             if (log.isDebugEnabled()) {
                 for (String k : ipHeader.keySet()) {
                     log.debug("InputPart headers: " + k + " = " + ipHeader.get(k));
