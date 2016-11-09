@@ -12,4 +12,5 @@
 | 11/06/16 | Power point, README and sample files, Nataliya | 2.5 ||
 | 11/07/16 | Team communication, documentation, planning, refactoring, everyone together, 5 hours each | 15 ||
 | 11/08/16 | Refactor isValid method to return error object, Karen | 4.5 ||
+| 11/08/16 | PlantUML documentation of data.validator.type and data.record, Christian | 4 ||
 | 11/09/16 | Update power point presentation, Karen | 1.5 |||
