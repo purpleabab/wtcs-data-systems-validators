@@ -10,9 +10,9 @@ import org.apache.log4j.Logger;
 public class RecordErrorObject {
     private final Logger log = Logger.getLogger(RecordErrorObject.class.getSimpleName());
 
-    String fieldName;
-    String expectedFieldDataTypeValues;// the toString of the data type
-    String actualFieldValue;
+    private String fieldName;
+    private String expectedFieldDataTypeValues;// the toString of the data type
+    private String actualFieldValue;
 
     public RecordErrorObject() {
     }

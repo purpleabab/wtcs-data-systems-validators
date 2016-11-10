@@ -6,9 +6,6 @@ import org.apache.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
-import edu.wtcsystem.data.record.DefinedValidatableRecord;
 
 /**
  * Takes a provided file, cuts it up into records (lines), generates record objects which implement
@@ -50,42 +47,46 @@ public class FileValidatorEngine {
         try {
             String fileLine;
             while (((fileLine = fileBufferedReader.readLine()) != null) && (fileLine.length() != 0)) {
+                log.debug("inside validateFile, fileLine is: " + fileLine);
+                log.debug("recordLineCounter: " + recordLineCounter);
 
-                log.info("inside validateFile, fileLine is: " + fileLine.toString());
-                log.info("recordLineCounter: " + recordLineCounter);
-
-                //only validate S9 records for now...
-                if (fileLine.substring(0, 2).equalsIgnoreCase("S9")) {
-                    recordErrorObject = recordValidatorEngine.validateRecord(new S9Record(fileLine));
-
-                    //if a not-null recordErrorObject is returned by the validateRecord, add it to the list that becomes the FileErrorObject
-                    if (recordErrorObject != null) {
-                        //if no listRecordsErrors exists yet, create it
-                        if (fileErrorObject.getListRecordErrors() == null) {
-                            fileErrorObject.setListRecordErrors(new ArrayList<RecordErrorObject>());
-                        }
-                        log.info("about to add reo to feo, recordLineCounter: " + recordLineCounter + " recordErrorObject.toString " + recordErrorObject.toString());
-                        log.info("fileErrorObject.getListRecordErrors().size(): " + fileErrorObject.getListRecordErrors().size());
-                        //add recordError to array list of errors
-                        fileErrorObject.getListRecordErrors().add(recordLineCounter, recordErrorObject);
-                    }
-                    //if record was valid, recordErrorObject will be null, do nothing, don't add it to fileErrorObject
-                }
+                //TODO refactor and extend to validate any type of record
+                validateS9Record(fileErrorObject, recordLineCounter, fileLine);
                 recordLineCounter++;
             }
-
         } catch (IOException ioe) {
             log.error("IOE error while reading uploaded file data!", ioe);
         } catch (Exception e) {
             log.error("Unexpected error while reading uploaded file data!", e);
         }
 
-        //TODO consider refactor to be better about returning null object.
         if (fileErrorObject.getListRecordErrors() == null) {
             return null;
         } else {
             return fileErrorObject;
         }
+    }
+
+    private void validateS9Record(FileErrorObject fileErrorObject, int recordLineCounter, String fileLine) {
+        RecordErrorObject recordErrorObject;
+        if (fileLine.substring(0, 2).equalsIgnoreCase("S9")) {
+            recordErrorObject = recordValidatorEngine.validateRecord(new S9Record(fileLine));
+
+            if (recordErrorObject != null) {
+                addRecordErrorToFileErrorList(fileErrorObject, recordErrorObject, recordLineCounter);
+            }
+        }
+    }
+
+    private void addRecordErrorToFileErrorList(FileErrorObject fileErrorObject, RecordErrorObject recordErrorObject, int recordLineCounter) {
+        //if no listRecordsErrors exists yet, create it
+        if (fileErrorObject.getListRecordErrors() == null) {
+            fileErrorObject.setListRecordErrors(new ArrayList<RecordErrorObject>());
+        }
+        log.debug("about to add reo to feo, recordLineCounter: " + recordLineCounter + " recordErrorObject.toString " + recordErrorObject.toString());
+        log.debug("fileErrorObject.getListRecordErrors().size(): " + fileErrorObject.getListRecordErrors().size());
+
+        fileErrorObject.getListRecordErrors().add(recordLineCounter, recordErrorObject);
     }
 
  /*   TODO possible refactor to more abstract validation of more than just S9 records

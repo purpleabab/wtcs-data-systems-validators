@@ -17,7 +17,7 @@ public class FileErrorObject {
     /**
      * map of file line number, error record pairs
      */
-    List<RecordErrorObject> listRecordErrors;
+    private List<RecordErrorObject> listRecordErrors;
 
     public FileErrorObject() {
     }
@@ -39,10 +39,8 @@ public class FileErrorObject {
      */
     public String getDisplayOfAllErrors() {
         String displayMessage = "";
-        RecordErrorObject recordErrorObject;
         if (getListRecordErrors().size() > 0) {
-            for (int i = 0; i < listRecordErrors.size(); i++) {
-                recordErrorObject = listRecordErrors.get(i);
+            for (RecordErrorObject recordErrorObject : getListRecordErrors()) {
                 displayMessage = displayMessage + recordErrorObject.toString();
             }
         } else {

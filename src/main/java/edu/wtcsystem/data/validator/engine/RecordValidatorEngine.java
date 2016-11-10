@@ -51,13 +51,11 @@ public class RecordValidatorEngine {
      * returns record error object if field is not valid.
      */
     public RecordErrorObject validateRecord(DefinedValidatableRecord record) {
-
         log.debug("Entering RecordValidatorEngine.validateRecord()");
         log.debug("Reading record definition and values");
 
         ValidatableRecordDefinition vrd = record.getRecordDefinition();
         Map<String, String> recordValues = record.getRecordValues();
-
         RecordErrorObject errorObject = null;
 
         log.debug("Beginning validation of " + vrd.getRecordTypeName());
@@ -68,9 +66,9 @@ public class RecordValidatorEngine {
 
         // Iterate through the fields from the record definition and check them
         for (ValidatableRecordFieldDefinition vrfd : vrd.getRecordFields()) {
-
             log.debug("Starting validation of field " + vrfd.getFieldName());
             log.debug("Getting " + vrfd.getFieldValidateType().getImplementorClass().getSimpleName() + " from TypeValidator pool");
+
             TypeValidator recordFieldValidator = typeValidatorPool.get(vrfd.getFieldValidateType());
 
             //if record not valid, populate error record with first field that has error
@@ -79,7 +77,7 @@ public class RecordValidatorEngine {
                 //make error object for that field
                 errorObject = new RecordErrorObject();
                 errorObject.setFieldName(vrfd.getFieldName());
-                errorObject.setExpectedFieldDataTypeValues(vrfd.getFieldValidateType().getImplementorClass().getSimpleName().toString());
+                errorObject.setExpectedFieldDataTypeValues(vrfd.getFieldValidateType().getImplementorClass().getSimpleName());
                 errorObject.setActualFieldValue(recordValues.get(vrfd.getFieldName()));
             }
 
@@ -97,7 +95,6 @@ public class RecordValidatorEngine {
         }
 
         log.debug("Ending validation of " + vrd.getRecordTypeName());
-
         log.debug("Exiting RecordValidatorEngine.validateRecord(); recordIsValid " + recordIsValid);
         if (!recordIsValid) {
             log.debug("Exiting RecordValidatorEngine.validateRecord(); when not null, recordErrorObject.toString " + errorObject.toString());
