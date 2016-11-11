@@ -14,3 +14,4 @@
 | 11/08/16 | Refactor isValid method to return error object, Karen | 4.5 ||
 | 11/08/16 | PlantUML documentation of data.validator.type and data.record, Christian | 4 ||
 | 11/09/16 | Update power point presentation, Karen | 1.5 |||
+| 11/11/16 | JUnit tests Nataliya, Christian | 1 |||

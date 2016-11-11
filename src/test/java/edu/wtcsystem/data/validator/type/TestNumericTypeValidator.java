@@ -62,5 +62,9 @@ public class TestNumericTypeValidator {
         log.info("  Testing for NumericTypeValidator null fails...");
         assertFalse("NumericTypeValidator: null reference INCORRECTLY marked valid!", validator.isValid(null));
     }
-
+    @Test
+    public void testNumericTypeDescribeSelf(){
+        log.info("  Testing toString for NumericTypeValidator...");
+        assertEquals("NumericTypeValidator: ", validator.toString() ,"NUMERIC: Digits 0 through 9.");
+    }
 }

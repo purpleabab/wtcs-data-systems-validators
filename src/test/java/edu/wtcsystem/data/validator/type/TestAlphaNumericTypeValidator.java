@@ -36,5 +36,10 @@ public class TestAlphaNumericTypeValidator {
         log.info("  Testing for AlphaNumericTypeValidator other than alpha and number in strings fail...");
         assertFalse("AlphaNumericTypeValidator: String with other than only letters and numbers INCORRECTLY marked valid!", validator.isValid(NOT_ALPHA_NUMERIC));
     }
+    @Test
+    public void testAlphaNumericTypeDescribeSelf(){
+        log.info("  Testing toString for AlphaNumericTypeValidator...");
+        assertEquals("AlphaNumericTypeValidator: ", validator.toString() ,"ALPHA_NUMERIC: A through Z, upper or lower case, and digits 0 through 9.");
+    }
 
 }

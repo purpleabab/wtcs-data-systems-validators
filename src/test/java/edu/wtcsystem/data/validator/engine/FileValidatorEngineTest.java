@@ -22,6 +22,8 @@ public class FileValidatorEngineTest {
     private final static String TEST_INPUT_FILE_PATH_INVALID_RECORD = "C:/GitProjects/wtcs-data-systems-validators/document/SampleS9RecordsFail.txt";
     private final static String TEST_INPUT_FILE_PATH_VALID_RECORD = "C:/GitProjects/wtcs-data-systems-validators/document/SampleS9Records.txt";
 
+    private final static String TEST_FILE_NAME = "SampleS9Records.txt";
+    private final static String TEST_FILE_NAME_FAIL = "SampleS9RecordsFail.txt";
 
 
     //InputStream wtcsFileStream = ip.getBody(InputStream.class, null);
@@ -37,7 +39,9 @@ public class FileValidatorEngineTest {
 
     @Test
     public void testValidateFileInvalidFile() throws Exception {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(TEST_INPUT_FILE_PATH_INVALID_RECORD));
+        InputStream inf =  ClassLoader.getSystemResourceAsStream(TEST_FILE_NAME_FAIL);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inf));
+
         fileValidatorEngine = new FileValidatorEngine(CLIENT_DATA_SYSTEM, bufferedReader);
         fileErrorObject = new FileErrorObject();
         assertNotNull(fileValidatorEngine);
@@ -50,7 +54,8 @@ public class FileValidatorEngineTest {
 
     @Test
     public void testValidateFileValidFile() throws Exception {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(TEST_INPUT_FILE_PATH_VALID_RECORD));
+        InputStream in =  ClassLoader.getSystemResourceAsStream(TEST_FILE_NAME);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
         assertNull(new FileValidatorEngine(CLIENT_DATA_SYSTEM, bufferedReader).validateFile());
     }
 

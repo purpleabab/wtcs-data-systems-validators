@@ -99,8 +99,7 @@ public class FileValidatorEngine {
         //String dataSystemRecordClass = DATA_SYSTEM_ENTITY_CLASS_BASE + "." + dataSystem + "." + fileLine.substring(0,2) + "Record";
         //Attempt to instantiate a class of that type, and handle failures to do so - try classloading it first?
 
-        // return a valid DefinedValidatableRecord - using DummyRecord to force return
-        return new DummyRecord("00");
+
     }
 */
 
