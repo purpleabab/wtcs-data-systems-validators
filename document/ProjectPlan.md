@@ -44,7 +44,10 @@ in a more strongly typed context (e.g. a database system).
 * Monday, Nov 7: At work.
 * Nov 8: A bunch of documentation. Karen gets some tests and things
   working with extended file validation.
+* Nov 11: JUnit tests
 
 ##### Week 4 (Nov 9 - Nov 16)
 
+* Nov 14: deployment to Digital Ocean; creating user documentation; incorporating code review feedback;
+  writing more tests to achieve higher coverage.
 * Class, Nov 16: Presentations

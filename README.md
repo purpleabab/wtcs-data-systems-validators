@@ -7,8 +7,10 @@
 ### Project Technologies/Techniques
 *Web servise
 
+    *Data Validator
 *Logging
 
+    * Log4j
 *Unit Testing
 
     *JUnit tests to achieve 80% code coverage
