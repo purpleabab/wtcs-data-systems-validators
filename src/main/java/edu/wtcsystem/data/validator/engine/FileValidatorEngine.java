@@ -25,12 +25,14 @@ public class FileValidatorEngine {
     private BufferedReader fileBufferedReader;
     private RecordValidatorEngine recordValidatorEngine;
     private int recordLineCounter;
+    private FileErrorObject fileErrorObject;
 
     public FileValidatorEngine(String dataSystem, BufferedReader fileBufferedReader) {
         this.dataSystem = dataSystem;
         this.fileBufferedReader = fileBufferedReader;
         recordValidatorEngine = new RecordValidatorEngine();
         this.recordLineCounter = recordLineCounter;
+        this.fileErrorObject = new FileErrorObject();
     }
 
     /**
@@ -40,7 +42,6 @@ public class FileValidatorEngine {
      * returns FileErrorObject which is a list of record error objects, if file is not valid
      */
     public FileErrorObject validateFile() {
-        FileErrorObject fileErrorObject = new FileErrorObject();
         RecordErrorObject recordErrorObject = new RecordErrorObject();
         int recordLineCounter = 0;
 
@@ -51,7 +52,9 @@ public class FileValidatorEngine {
                 log.debug("recordLineCounter: " + recordLineCounter);
 
                 //TODO refactor and extend to validate any type of record
-                validateS9Record(fileErrorObject, recordLineCounter, fileLine);
+                if ((recordErrorObject = validateS9Record(recordLineCounter, fileLine)) != null) {
+                    fileErrorObject.addRecordError(recordErrorObject);
+                }
                 recordLineCounter++;
             }
         } catch (IOException ioe) {
@@ -67,40 +70,16 @@ public class FileValidatorEngine {
         }
     }
 
-    private void validateS9Record(FileErrorObject fileErrorObject, int recordLineCounter, String fileLine) {
+    private RecordErrorObject validateS9Record(int recordLineCounter, String fileLine) {
         RecordErrorObject recordErrorObject;
-        if (fileLine.substring(0, 2).equalsIgnoreCase("S9")) {
-            recordErrorObject = recordValidatorEngine.validateRecord(new S9Record(fileLine));
 
-            if (recordErrorObject != null) {
-                addRecordErrorToFileErrorList(fileErrorObject, recordErrorObject, recordLineCounter);
+        if (fileLine.substring(0, 2).equalsIgnoreCase("S9")) {
+            if ((recordErrorObject = recordValidatorEngine.validateRecord(new S9Record(fileLine))) != null) {
+                return recordErrorObject;
             }
         }
+        return null;
     }
 
-    private void addRecordErrorToFileErrorList(FileErrorObject fileErrorObject, RecordErrorObject recordErrorObject, int recordLineCounter) {
-        //if no listRecordsErrors exists yet, create it
-        if (fileErrorObject.getListRecordErrors() == null) {
-            fileErrorObject.setListRecordErrors(new ArrayList<RecordErrorObject>());
-        }
-        log.debug("about to add reo to feo, recordLineCounter: " + recordLineCounter + " recordErrorObject.toString " + recordErrorObject.toString());
-        log.debug("fileErrorObject.getListRecordErrors().size(): " + fileErrorObject.getListRecordErrors().size());
-
-        fileErrorObject.getListRecordErrors().add(recordLineCounter, recordErrorObject);
-    }
-
- /*   TODO possible refactor to more abstract validation of more than just S9 records
-
-    // This shouldn't be called unless we know that the line isn't null; move that out of this class!
-    private DefinedValidatableRecord S9R(String fileLine) {
-
-        //Consider better validation of Record type
-
-        //String dataSystemRecordClass = DATA_SYSTEM_ENTITY_CLASS_BASE + "." + dataSystem + "." + fileLine.substring(0,2) + "Record";
-        //Attempt to instantiate a class of that type, and handle failures to do so - try classloading it first?
-
-
-    }
-*/
 
 }

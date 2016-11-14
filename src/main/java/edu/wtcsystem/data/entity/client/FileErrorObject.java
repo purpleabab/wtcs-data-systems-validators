@@ -2,6 +2,7 @@ package edu.wtcsystem.data.entity.client;
 
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,19 +20,25 @@ public class FileErrorObject {
      */
     private List<RecordErrorObject> listRecordErrors;
 
-    public FileErrorObject() {
-    }
-
     public FileErrorObject(List<RecordErrorObject> listRecordErrors) {
         this.listRecordErrors = listRecordErrors;
     }
 
-    public List<RecordErrorObject> getListRecordErrors() {
-        return listRecordErrors;
+
+    /**
+     * constructor
+     */
+    public FileErrorObject() {
+        this.listRecordErrors = new ArrayList<>();
     }
 
-    public void setListRecordErrors(List<RecordErrorObject> listRecordErrors) {
-        this.listRecordErrors = listRecordErrors;
+    public List<RecordErrorObject> getListRecordErrors() {
+        return (listRecordErrors.size() == 0 ? null : listRecordErrors);
+    }
+
+
+    public void addRecordError(RecordErrorObject recordErrorObject) {
+        listRecordErrors.add(recordErrorObject);
     }
 
     /**
