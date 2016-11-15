@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 
 <html lang="en">
@@ -24,7 +25,7 @@
 <body>
 <h1>WTCS Data File Validator</h1>
 
-<form id="fileValidate" action="/wtcs/file/validate" method="post" enctype="multipart/form-data">
+<form id="fileValidate" action="<%=request.getContextPath()%>/wtcs/file/validate" method="post" enctype="multipart/form-data">
     <select id="dataSystem" name="dataSystem">
         <option value="client" selected="selected">Client</option>
     </select>
