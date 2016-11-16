@@ -1,0 +1,102 @@
+@startuml
+actor "WS Client" as WSClient #green
+participant "WTCS File Validator\nJAX-RS WS" as WtcsFileValidator
+participant FileValidatorEngine <<(C,#add1b2)>>
+participant RecordValidatorEngine <<(C,#add1b2)>>
+participant "<? extends ValidatableRecord>" as Record << (C,#add1b2) DefinedValidatableRecord >>
+
+WSClient -> WtcsFileValidator : HTTP POST File\n<i>multipart/formdata</i>
+activate WtcsFileValidator
+
+  WtcsFileValidator -> WtcsFileValidator : Create a <i>FileValidatorEngine</i>
+
+  ' START FILE VALIDATION ENGINE SETUP
+  activate WtcsFileValidator #bbd5ec
+  activate FileValidatorEngine #bbd5ec
+  ' END FILE VALIDATION ENGINE SETUP
+
+  WtcsFileValidator -> FileValidatorEngine : Validate File\n<i>BufferedReader</i>
+
+    FileValidatorEngine -> FileValidatorEngine : Create a <i>RecordValidatorEngine</i>
+
+    ' Record engine is needed for validating each record in the file
+    ' START RECORD VALIDATION ENGINE SETUP
+    activate FileValidatorEngine #de6549
+    activate RecordValidatorEngine #de6549
+    ' END RECORD VALIDATION ENGINE SETUP
+
+    ' Record engine creates TypeValidator pool
+    RecordValidatorEngine -> RecordValidatorEngine : Create <i>TypeValidator</i> pool
+
+      ' START FILE VALIDATION ENGINE GROUP: LOOP TO VALIDATE
+      group Loop: Validate File
+
+        ||10||
+        FileValidatorEngine -> FileValidatorEngine : Read Line\n<i>DefinedValidatableRecord</i>
+
+        ' START RECORD SETUP
+        ' Record to be validated now exists
+        ' Mirror activation of File engine, Record engine, and Record
+        activate FileValidatorEngine #027ec4
+        activate RecordValidatorEngine #027ec4
+        activate Record #027ec4
+        ' END RECORD SETUP
+
+        ' Hand the record to the Record engine
+        FileValidatorEngine -> RecordValidatorEngine : Validate Record\n<i>DefinedValidatableRecord</i>
+
+          group Validate Record
+
+            ||10||
+            RecordValidatorEngine -> Record : Get Record Definition
+            Record --> RecordValidatorEngine : <i>ValidatableRecordDefinition</i>
+
+            RecordValidatorEngine -> Record : Get Record Values
+            Record --> RecordValidatorEngine : <i>Map<String, String></i>
+
+              group Loop: Validate Record Fields
+                ||10||
+                RecordValidatorEngine -> RecordValidatorEngine : Use <i>TypeValidator</i> on each\n<i>ValidatableRecordFieldDefinition</i>
+                ||10||
+              end
+
+            ' START RECORD TEARDOWN
+            ' Record to be validated is done being read and checked
+            deactivate Record
+            deactivate RecordValidatorEngine
+            deactivate FileValidatorEngine
+            destroy Record
+            ' END RECORD TEARDOWN
+
+          ' END VALIDATE THE RECORD
+          end
+
+        ' Record engine responds after each record has been checked
+        RecordValidatorEngine --> FileValidatorEngine : <i>null</i> or <i>RecordErrorObject</i>
+
+        ' File engine stores non-null responses
+        FileValidatorEngine -> FileValidatorEngine : If applicable store\n<i>RecordErrorObject</i> to\n<i>FileErrorObject</i>
+        ||10||
+
+      ' END FILE VALIDATION ENGINE GROUP: LOOP TO VALIDATE
+      end
+
+    ' Record engine persists until File engine is done with all records
+    ' START RECORD VALIDATION ENGINE TEARDOWN
+    deactivate RecordValidatorEngine
+    deactivate FileValidatorEngine
+    destroy RecordValidatorEngine
+    ' END RECORD VALIDATION ENGINE TEARDOWN
+
+  ' File engine responds after all records in the file have been checked
+  FileValidatorEngine --> WtcsFileValidator : <i>null</i> or <i>FileErrorObject</i>
+
+  ' START FILE VALIDATION ENGINE TEARDOWN
+  deactivate FileValidatorEngine
+  deactivate WtcsFileValidator
+  destroy FileValidatorEngine
+  ' END FILE VALIDATION ENGINE TEARDOWN
+
+WtcsFileValidator --> WSClient : <i>application/json</i> or\n<i>text/plain</i> validity response
+deactivate WtcsFileValidator
+@enduml
